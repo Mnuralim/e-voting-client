@@ -1,0 +1,60 @@
+import { onErrorAlert, onSuccessAlert } from "@/lib/alert";
+import { contract } from "@/lib/contract";
+import { useState } from "react";
+import { useActiveAccount, useReadContract } from "thirdweb/react";
+
+export const useWhitelist = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [token, setToken] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  const account = useActiveAccount();
+  const { data: isWhitelisted } = useReadContract({
+    contract,
+    method: "getNFTHolders",
+  });
+
+  const handleWhitelistAddress = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/whitelist`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userAddress: account?.address,
+            token,
+            email,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+      onSuccessAlert("Address whitelisted successfully");
+    } catch (error) {
+      onErrorAlert(
+        error instanceof Error ? error.message : "Something went wrong"
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return {
+    isLoading,
+    token,
+    email,
+    account,
+    isWhitelisted,
+    setToken,
+    setEmail,
+    handleWhitelistAddress,
+  };
+};

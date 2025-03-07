@@ -1,8 +1,8 @@
 "use client";
 
 import { contract } from "@/lib/contract";
-import React, { useState } from "react";
-import { TransactionButton, useReadContract } from "thirdweb/react";
+import React from "react";
+import { TransactionButton } from "thirdweb/react";
 import { resolveScheme, upload } from "thirdweb/storage";
 import { client } from "@/lib/thirdweb-client";
 import { prepareContractCall } from "thirdweb";
@@ -12,54 +12,30 @@ import { toBigInt } from "ethers";
 import Modal from "./modal";
 import { Table } from "@/app/_components/table";
 import { Form } from "@/app/_components/form";
+import { useCandidate } from "./hooks/use-candidate";
 
 interface Props {
   electionId: string;
 }
 
 export const ListCandidate = ({ electionId }: Props) => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [name, setName] = useState<string>("");
-  const [vision, setVision] = useState<string>("");
-  const [mission, setMission] = useState<string>("");
-  const { data: candidates, isLoading } = useReadContract({
-    contract,
-    method: "getAllCandidates",
-    params: [toBigInt(electionId)],
-  });
-
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    const file = files[0];
-
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    if (!allowedTypes.includes(file.type)) {
-      return;
-    }
-
-    setImage(file);
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImagePreview(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleOpenModal = (id?: string) => {
-    setOpenModal(true);
-    if (id) {
-      setSelectedId(id);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setSelectedId(null);
-  };
+  const {
+    openModal,
+    selectedId,
+    image,
+    imagePreview,
+    name,
+    vision,
+    mission,
+    candidates,
+    isLoading,
+    handleChangeImage,
+    handleOpenModal,
+    handleCloseModal,
+    setName,
+    setVision,
+    setMission,
+  } = useCandidate(electionId);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -126,6 +102,7 @@ export const ListCandidate = ({ electionId }: Props) => {
           title={selectedId ? "Edit Candidate" : "Add Candidate"}
           transactionButton={
             <TransactionButton
+              type="button"
               transaction={async () =>
                 prepareContractCall({
                   contract,
@@ -146,13 +123,11 @@ export const ListCandidate = ({ electionId }: Props) => {
               className="bg-red-600 px-5 font-bold py-2.5 rounded-lg"
               onError={(error) => onErrorAlert(`${error.message}`)}
               onTransactionConfirmed={() => {
-                setOpenModal(false);
+                handleCloseModal();
                 onSuccessAlert("Candidate added!");
-                setImagePreview(null);
                 setName("");
                 setVision("");
                 setMission("");
-                setSelectedId(null);
               }}
             >
               Submit

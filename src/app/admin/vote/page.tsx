@@ -1,12 +1,12 @@
 import React from "react";
-import Management from "./_components/management";
+import { Management } from "./_components/management";
 
-const Page = () => {
+function Page() {
   return (
     <main>
       <Management />
     </main>
   );
-};
+}
 
 export default Page;

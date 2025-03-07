@@ -20,7 +20,11 @@ interface Props {
 export const WalletConnectButton = ({ admin = false }: Props) => {
   const router = useRouter();
   return (
-    <div>
+    <div
+      style={{
+        width: admin ? "" : "100%",
+      }}
+    >
       <ConnectButton
         wallets={supportedWallets}
         chain={arbitrumSepolia}

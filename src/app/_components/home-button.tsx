@@ -13,7 +13,7 @@ const HomeButton = () => {
   return (
     <div className="flex items-center gap-x-4">
       <Link
-        href={"/steps"}
+        href={"/tutorial"}
         className="border-2 font-bold border-[#FFFF00] xl:text-lg  rounded-lg text-sm py-2 px-10 text-white"
       >
         Tutorial

@@ -1,14 +1,16 @@
 "use client";
 
 import { contract } from "@/lib/contract";
-import React, { useState } from "react";
-import { TransactionButton, useReadContract } from "thirdweb/react";
+import { TransactionButton } from "thirdweb/react";
 import Modal from "../../_components/modal";
 import { prepareContractCall } from "thirdweb";
 import { onErrorAlert, onSuccessAlert } from "@/lib/alert";
 import { Table } from "@/app/_components/table";
 import Image from "next/image";
 import { CircleLoading } from "../../../../../public/image";
+import { useElection } from "../hooks/use-selection";
+import { InputField } from "./input-field";
+import { SelectField } from "./select-field";
 
 interface Props {
   faculties: IFaculty[];
@@ -39,74 +41,35 @@ const electionType = [
 ];
 
 export const ElectionList = ({ faculties, programs }: Props) => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [name, setName] = useState<string>("");
-  const [type, setType] = useState<number>(0);
-  const [faculty, setFaculty] = useState<string | null>(null);
-  const [program, setProgram] = useState<string | null>(null);
-  const [search, setSearch] = useState<string>("");
-  const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [filterType, setFilterType] = useState<number | null>(null);
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
-
-  const { data: elections, isLoading } = useReadContract({
-    contract,
-    method: "getAllElections",
-  });
-
-  const handleOpenModal = (id?: string) => {
-    setOpenModal(true);
-    if (id) {
-      setSelectedId(id);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setSelectedId(null);
-  };
-
-  const handleSelectType = (type: number) => {
-    setProgram(null);
-    setFaculty(null);
-    setType(type);
-  };
-
-  const handleSearch = (value: string) => {
-    setSearch(value);
-    setIsSearching(true);
-    setTimeout(() => {
-      setIsSearching(false);
-    }, 1000);
-  };
-
-  const handleFilter = (value: string) => {
-    setFilterType(value === "" ? null : Number(value));
-    setIsFiltering(true);
-    setTimeout(() => {
-      setIsFiltering(false);
-    }, 1000);
-  };
+  const {
+    openModal,
+    selectedId,
+    name,
+    type,
+    faculty,
+    program,
+    search,
+    isSearching,
+    filterType,
+    isFiltering,
+    isLoading,
+    filteredElections,
+    filteredFaculties,
+    filteredPrograms,
+    handleOpenModal,
+    handleCloseModal,
+    handleSelectType,
+    handleSearch,
+    handleFilter,
+    setName,
+    setFaculty,
+    setProgram,
+    handleReset,
+  } = useElection(faculties, programs);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
-  const filteredElections = elections?.filter((e) => {
-    const matchesSearch = e.name.toLowerCase().includes(search.toLowerCase());
-    const matchesType = filterType === null || e.electionType === filterType;
-
-    return matchesSearch && matchesType;
-  });
-
-  const filteredFaculties = faculties.filter(
-    (f) =>
-      !elections?.find((e) => e.faculty.toLowerCase() === f.name.toLowerCase())
-  );
-  const filteredPrograms = programs.filter(
-    (p) => !elections?.find((e) => e.program === p.name)
-  );
 
   return (
     <div className="p-8">
@@ -117,9 +80,7 @@ export const ElectionList = ({ faculties, programs }: Props) => {
             <div className="relative">
               <input
                 type="text"
-                defaultValue={search}
                 value={search}
-                autoFocus
                 onChange={(e) => handleSearch(e.target.value)}
                 className="w-full p-2 border rounded bg-[#333333] text-white text-sm placeholder-gray-400"
                 placeholder="Search"
@@ -183,26 +144,11 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                 })) || []
               }
               columns={[
-                {
-                  header: "Election ID",
-                  key: "id",
-                },
-                {
-                  header: "Name",
-                  key: "name",
-                },
-                {
-                  header: "Type",
-                  key: "type",
-                },
-                {
-                  header: "Faculty",
-                  key: "faculty",
-                },
-                {
-                  header: "Program",
-                  key: "program",
-                },
+                { header: "Election ID", key: "id" },
+                { header: "Name", key: "name" },
+                { header: "Type", key: "type" },
+                { header: "Faculty", key: "faculty" },
+                { header: "Program", key: "program" },
               ]}
             />
           ) : (
@@ -217,97 +163,38 @@ export const ElectionList = ({ faculties, programs }: Props) => {
           <h1 className="font-bold text-xl mb-8">
             {selectedId ? "Edit Election" : "Add Election"}
           </h1>
-          <div className="mb-4">
-            <label className="block mb-2 text-white">Name</label>
-            <input
-              type={"text"}
-              name={"name"}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+          <InputField
+            type="text"
+            name="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <SelectField
+            name="Type"
+            value={type}
+            options={electionType}
+            onChange={(e) => handleSelectType(parseInt(e.target.value))}
+            required
+          />
+          {type === 1 && (
+            <SelectField
+              name="Faculty"
+              value={faculty as string}
+              options={filteredFaculties}
+              onChange={(e) => setFaculty(e.target.value)}
               required
-              className="w-full p-2 border rounded peer text-black"
             />
-            <p className="text-red-500 text-sm mt-1 invisible peer-invalid:visible">
-              Name is required
-            </p>
-          </div>
-
-          <div className="mb-4">
-            <label className="block mb-2">Type</label>
-            <select
-              name="type"
-              id="type"
+          )}
+          {type === 2 && (
+            <SelectField
+              name="Program"
+              value={program as string}
+              options={filteredPrograms}
+              onChange={(e) => setProgram(e.target.value)}
               required
-              defaultValue={"select"}
-              value={type}
-              onChange={(e) => handleSelectType(parseInt(e.target.value))}
-              className="w-full p-2 border rounded peer text-black"
-            >
-              <option value={"select"} disabled>
-                Select Type
-              </option>
-              {electionType.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
-            <p className="text-red-500 text-sm mt-1 invisible peer-invalid:visible">
-              Type is required
-            </p>
-          </div>
-          {type === 1 ? (
-            <div className="mb-4">
-              <label className="block mb-2">Faculty</label>
-              <select
-                name="faculty"
-                id="faculty"
-                required
-                defaultValue={"select"}
-                value={faculty as string}
-                onChange={(e) => setFaculty(e.target.value)}
-                className="w-full p-2 border rounded peer text-black"
-              >
-                <option value={"select"} disabled>
-                  Select Faculty
-                </option>
-                {filteredFaculties.map((type) => (
-                  <option key={type.id} value={type.name}>
-                    {type.name}
-                  </option>
-                ))}
-              </select>
-              <p className="text-red-500 text-sm mt-1 invisible peer-invalid:visible">
-                Faculty is required
-              </p>
-            </div>
-          ) : null}
-          {type === 2 ? (
-            <div className="mb-4">
-              <label className="block mb-2">Program</label>
-              <select
-                name="program"
-                id="program"
-                required
-                defaultValue={"select"}
-                value={program as string}
-                onChange={(e) => setProgram(e.target.value)}
-                className="w-full p-2 border rounded peer text-black"
-              >
-                <option value={"select"} disabled>
-                  Select Program
-                </option>
-                {filteredPrograms.map((type) => (
-                  <option key={type.id} value={type.name}>
-                    {type.name}
-                  </option>
-                ))}
-              </select>
-              <p className="text-red-500 text-sm mt-1 invisible peer-invalid:visible">
-                Program is required
-              </p>
-            </div>
-          ) : null}
+            />
+          )}
           <div className="flex justify-end mt-10">
             <TransactionButton
               transaction={async () =>
@@ -320,12 +207,8 @@ export const ElectionList = ({ faculties, programs }: Props) => {
               className="bg-red-600 px-5 font-bold py-2.5 rounded-lg"
               onError={(error) => onErrorAlert(`${error.message}`)}
               onTransactionConfirmed={() => {
-                setOpenModal(false);
                 onSuccessAlert("Election created!");
-                setFaculty(null);
-                setProgram(null);
-                setName("");
-                setType(0);
+                handleReset();
               }}
             >
               Submit

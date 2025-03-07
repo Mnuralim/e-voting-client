@@ -3,14 +3,14 @@ import { VotingComponent } from "./_components/vote";
 
 export const dynamic = "force-dynamic";
 
-const Page = () => {
+function Page() {
   return (
-    <div className="mt-20 px-4">
+    <div className="mt-20 px-4 xl:mt-0 py-20 md:py-0">
       <Suspense>
         <VotingComponent />
       </Suspense>
     </div>
   );
-};
+}
 
 export default Page;

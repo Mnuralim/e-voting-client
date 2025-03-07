@@ -2,29 +2,13 @@
 import { onErrorAlert, onSuccessAlert } from "@/lib/alert";
 import { contract } from "@/lib/contract";
 import { toBigInt } from "ethers";
-import React, { useState } from "react";
 import { prepareContractCall } from "thirdweb";
-import {
-  TransactionButton,
-  useActiveAccount,
-  useReadContract,
-} from "thirdweb/react";
+import { TransactionButton } from "thirdweb/react";
+import { useVotingManagement } from "../hooks/use-voting";
 
-const Management = () => {
-  const account = useActiveAccount();
-  const { data: isVotingActive } = useReadContract({
-    contract,
-    method: "getGlobalVotingPeriod",
-  });
-
-  const [duration, setDuration] = useState<string>("");
-  const durationOptions = [
-    { label: "1 Day", value: 86400 },
-    { label: "2 Days", value: 2 * 86400 },
-    { label: "3 Days", value: 3 * 86400 },
-    { label: "5 Days", value: 5 * 86400 },
-    { label: "7 Days", value: 7 * 86400 },
-  ];
+export const Management = () => {
+  const { duration, setDuration, account, isVotingActive, durationOptions } =
+    useVotingManagement();
 
   return (
     <div className="p-10">
@@ -95,5 +79,3 @@ const Management = () => {
     </div>
   );
 };
-
-export default Management;

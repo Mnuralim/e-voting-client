@@ -1,24 +1,11 @@
-import React from "react";
-import { Device } from "./_components/device";
+import { Tutorial } from "./_components/tutorial";
 
-const Page = () => {
+function Page() {
   return (
-    <main className="w-1/3 mx-auto text-white">
-      <h1 className="font-bold mt-32 text-4xl">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos,
-        consectetur?
-      </h1>
-      <p className="mt-5 text-lg">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-        perferendis laudantium fugit sequi dolorem obcaecati totam officia
-        cumque molestiae laboriosam?
-      </p>
-      <h2 className="my-5 font-bold text-3xl">
-        Langkah-langkah melakukan voting
-      </h2>
-      <Device />
+    <main className="w-full max-w-7xl mx-auto mt-[76px] md:mt-[120px]">
+      <Tutorial />
     </main>
   );
-};
+}
 
 export default Page;

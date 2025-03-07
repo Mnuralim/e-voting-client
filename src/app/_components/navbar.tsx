@@ -45,7 +45,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full">
+    <nav className="fixed top-0 left-0 w-full z-20">
       <div className="flex items-center justify-between w-full max-w-7xl mx-auto py-5 bg-[#111111]">
         <div className="flex items-center gap-2 justify-between w-full px-4">
           <Image src={Logo} alt="logo" draggable={false} />
@@ -59,7 +59,7 @@ const Navbar = () => {
           </button>
         </div>
         <div
-          className={`fixed md:static w-full bg-[#111111] z-10 duration-300 transform transition-all ease-linear ${
+          className={`fixed md:static w-full bg-[#111111] rounded-b-xl shadow-amber-300 md:shadow-none md:rounded-b-none shadow-[0_5px_5px_-5px_rgba(0,0,0,0.3)] z-10 duration-300 transform transition-all ease-linear ${
             isOpen ? "top-[76px]" : "-top-full"
           }`}
         >
@@ -86,7 +86,7 @@ const Navbar = () => {
                     : "text-[#E7E7E7]"
                 }`}
               >
-                Register
+                Whitelist
               </Link>
             )}
             <WalletConnectButton />

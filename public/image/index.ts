@@ -12,6 +12,8 @@ import Logo from "./Logo.png";
 import HamburgerIcon from "./material-symbols_menu-rounded.png";
 import HomeAsset from "./home-asset.png";
 import CloseIcon from "./mingcute_close-fill.png";
+import HomeVector from "./home-vector.png";
+import HamburgerWhiteIcon from "./hamburger-white.png";
 
 export {
   GridIcon,
@@ -28,4 +30,6 @@ export {
   HamburgerIcon,
   HomeAsset,
   CloseIcon,
+  HomeVector,
+  HamburgerWhiteIcon,
 };

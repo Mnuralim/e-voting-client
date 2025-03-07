@@ -4,6 +4,7 @@ import {
   ActivityIcon,
   CandidateIcon,
   GridIcon,
+  Logo,
   SettingIcon,
   StatisticIcon,
   VoteIcon,
@@ -14,6 +15,7 @@ import { useReadContract } from "thirdweb/react";
 import { contract } from "@/lib/contract";
 import { SidebarItem } from "./sidebar-item";
 import type { StaticImageData } from "next/image";
+import Image from "next/image";
 
 export type SidebarType =
   | {
@@ -138,12 +140,8 @@ const Sidebar = () => {
 
   return (
     <aside className="h-full col-span-1 border-r border-r-[#A1A1A1] border-r-opacity-30">
-      <div className="mt-10 flex items-center px-4 gap-1">
-        <div className="w-16 bg-[#A1A1A1] aspect-square"></div>
-        <div className="font-bold text-2xl text-[#A1A1A1]">
-          <p>LOREMIPSUM</p>
-          <p>DOLOR</p>
-        </div>
+      <div className="mt-10 flex items-center px-4 gap-1 justify-center">
+        <Image src={Logo} alt="logo-icon" className="object-contain" />
       </div>
       <div className="flex flex-col mt-12">
         {siderBarItems.map((item) => (

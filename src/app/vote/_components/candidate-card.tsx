@@ -2,23 +2,39 @@ import Image from "next/image";
 import React from "react";
 
 interface Props {
+  id: number;
   name: string;
   image: string;
   vision: string;
   voteCount: number;
+  selectedId: number;
+  handleSelectCandidate: (id: number) => void;
 }
 
-export const CandidateCard = ({ image, name, vision, voteCount }: Props) => {
+export const CandidateCard = ({
+  image,
+  name,
+  vision,
+  voteCount,
+  selectedId,
+  id,
+  handleSelectCandidate,
+}: Props) => {
   return (
-    <div className="bg-white flex flex-col justify-between p-5 w-[80%] items-center mx-auto">
+    <div
+      onClick={() => handleSelectCandidate(id)}
+      className={`flex flex-col justify-between cursor-pointer rounded-2xl p-5 w-[80%] aspect-[226/290] items-center mx-auto shadow-amber-300 shadow-md ${
+        selectedId === id ? "bg-[#FFFF00]" : "bg-white"
+      }`}
+    >
       <div className="flex flex-col items-center gap-2 w-full">
-        <div className="bg-[#E7E7E7] w-full aspect-[4/3] h-full">
+        <div className="bg-[#E7E7E7] w-full aspect-[18/13] h-full rounded-md">
           <Image
             alt={name}
             src={image}
             width={400}
             height={300}
-            className="object-center object-cover w-full h-full"
+            className="object-center object-contain w-full aspect-[18/13] h-auto "
           />
         </div>
         <h1 className="text-[#A68B02] text-lg font-bold">{name}</h1>

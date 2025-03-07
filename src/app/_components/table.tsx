@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import { CircleLoading } from "../../../public/image";
 
-// Tipe data untuk kolom
 interface Column<T> {
   key: keyof T;
   header: string;
