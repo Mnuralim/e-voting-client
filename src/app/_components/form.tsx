@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { CircleLoading } from "../../../public/image";
+import { ArrowRightIcon, FileUploadIcon } from "../admin/_components/svg";
 
 export const Form = ({
   title,
@@ -11,37 +12,66 @@ export const Form = ({
   transactionButton,
 }: FormProps) => {
   return (
-    <div className="w-full p-16 overflow-y-auto h-full">
-      <h1 className="font-bold text-xl mb-8">{title}</h1>
-      <form onSubmit={onSubmit} className="space-y-4">
+    <div className="w-full p-6 md:p-8 overflow-y-auto">
+      <h1 className="font-bold text-2xl text-white mb-6 flex items-center">
+        <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+        {title}
+      </h1>
+      <form onSubmit={onSubmit} className="space-y-5">
         {fields.map((field, index) => (
           <div key={index} className="mb-4">
-            <label className="block mb-2">{field.label}</label>
+            <label className="block mb-2 text-sm font-medium text-gray-300">
+              {field.label}{" "}
+              {field.required && <span className="text-[#FFFF00]">*</span>}
+            </label>
             {field.type === "textarea" ? (
               <textarea
                 name={field.name}
                 value={field.value}
                 onChange={field.onChange}
                 required={field.required}
-                className="w-full p-2 border rounded peer bg-white text-black"
+                className="w-full p-3 border border-gray-700 rounded-lg bg-[#222222] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent transition-all resize-none"
+                rows={4}
               />
             ) : field.type === "select" ? (
-              <select
-                name={field.name}
-                value={field.value}
-                onChange={field.onChange}
-                required={field.required}
-                className="w-full p-2 border bg-white rounded peer text-black"
-              >
-                <option value="" disabled>
-                  Select {field.label}
-                </option>
-                {field.options?.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
+              <div className="relative">
+                <select
+                  name={field.name}
+                  value={field.value}
+                  onChange={field.onChange}
+                  required={field.required}
+                  className="w-full p-3 border border-gray-700 rounded-lg bg-[#222222] text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent transition-all"
+                >
+                  <option value="" disabled>
+                    Pilih {field.label}
                   </option>
-                ))}
-              </select>
+                  {field.options?.map((option) => (
+                    <option
+                      key={option.value}
+                      value={option.value}
+                      className="bg-[#222222]"
+                    >
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                  <svg
+                    className="w-4 h-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
             ) : field.type === "file" ? (
               <div className="flex flex-col max-w-xs">
                 <div className="relative group">
@@ -62,20 +92,23 @@ export const Form = ({
                           alt="preview"
                           width={350}
                           height={300}
-                          className="rounded-md"
+                          className="rounded-lg object-cover"
                         />
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
-                          <span className="text-white font-medium">
-                            Upload here
-                          </span>
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
+                          <div className="flex flex-col items-center">
+                            <FileUploadIcon />
+                            <span className="text-white font-medium">
+                              Ganti Gambar
+                            </span>
+                          </div>
                         </div>
                       </div>
                     ) : (
-                      <div className="w-full h-[400px] border-2 border-dashed rounded-lg flex items-center justify-center bg-gray-50 group-hover:bg-gray-100 transition-colors">
-                        <div className="text-center">
-                          <div className="mb-2">
+                      <div className="w-full h-[300px] border-2 border-dashed border-gray-700 rounded-lg flex items-center justify-center bg-[#1A1A1A] group-hover:bg-[#222222] transition-colors">
+                        <div className="text-center p-6">
+                          <div className="mb-3">
                             <svg
-                              className="mx-auto h-12 w-12 text-gray-400"
+                              className="mx-auto h-12 w-12 text-gray-500 group-hover:text-[#FFFF00] transition-colors"
                               stroke="currentColor"
                               fill="none"
                               viewBox="0 0 48 48"
@@ -88,8 +121,10 @@ export const Form = ({
                               />
                             </svg>
                           </div>
-                          <p className="text-gray-600">Click to upload</p>
-                          <p className="text-sm text-gray-500 mt-1">
+                          <p className="text-gray-400 font-medium group-hover:text-white transition-colors">
+                            Klik untuk upload
+                          </p>
+                          <p className="text-sm text-gray-500 mt-2">
                             PNG, JPG, JPEG
                           </p>
                         </div>
@@ -105,22 +140,22 @@ export const Form = ({
                 value={field.value}
                 onChange={field.onChange}
                 required={field.required}
-                className="w-full p-2 border rounded peer bg-white text-black"
+                className="w-full p-3 border border-gray-700 rounded-lg bg-[#222222] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent transition-all"
               />
             )}
             {field.required && (
-              <p className="text-red-500 text-sm mt-1 invisible peer-invalid:visible">
-                {field.label} is required
+              <p className="text-red-400 text-xs mt-2 invisible peer-invalid:visible">
+                {field.label} wajib diisi
               </p>
             )}
           </div>
         ))}
-        <div className="flex justify-end mt-10">
+        <div className="flex justify-end pt-4">
           {!transactionButton ? (
             <button
               type="submit"
               disabled={loading}
-              className="border-white bg-white font-semibold text-black rounded-lg py-2 px-4 flex items-center justify-center"
+              className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <Image
@@ -131,7 +166,10 @@ export const Form = ({
                   className="animate-spin"
                 />
               ) : (
-                buttonText
+                <>
+                  {buttonText}
+                  <ArrowRightIcon />
+                </>
               )}
             </button>
           ) : (

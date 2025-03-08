@@ -8,6 +8,7 @@ import { contract } from "@/lib/contract";
 import { toBigInt } from "ethers";
 import { onErrorAlert, onSuccessAlert } from "@/lib/alert";
 import { useVoting } from "../hooks/use-voting";
+import { LoadingSpinner } from "@/app/_components/loading-spinner";
 
 export function VotingComponent() {
   const {
@@ -23,31 +24,31 @@ export function VotingComponent() {
     handleSignMessage,
   } = useVoting();
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div className="flex flex-col min-h-screen text-white items-center justify-center">
       <ElectionList
         handleSelectElection={handleSelectElection}
         selectedElection={selectedElection as string}
       />
-      <h1 className="font-bold text-xl my-7">Vote Now</h1>
+      <h1 className="font-bold text-xl my-7">Lakukan Voting Sekarang</h1>
       <Countdown />
-      <div className="grid mt-10 gap-10 w-full xl:grid-cols-2 xl:max-w-[40%]">
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          candidates?.map((candidate, index) => (
-            <CandidateCard
-              handleSelectCandidate={handleSelectCandidate}
-              selectedId={selectedCandidate!}
-              key={index}
-              id={Number(candidate.id)}
-              image={candidate.image}
-              name={candidate.name}
-              vision={candidate.vision}
-              voteCount={Number(candidate.voteCount)}
-            />
-          ))
-        )}
+      <div className="grid mt-10 gap-10 w-full md:grid-cols-2 xl:max-w-[40%]">
+        {candidates?.map((candidate, index) => (
+          <CandidateCard
+            handleSelectCandidate={handleSelectCandidate}
+            selectedId={selectedCandidate!}
+            key={index}
+            id={Number(candidate.id)}
+            image={candidate.image}
+            name={candidate.name}
+            vision={candidate.vision}
+            voteCount={Number(candidate.voteCount)}
+          />
+        ))}
       </div>
 
       <div className="mt-10">
@@ -62,7 +63,7 @@ export function VotingComponent() {
                   : ""
               }`}
             >
-              Sign Message
+              Tanda Tangani Pesan
             </button>
           ) : (
             <TransactionButton
@@ -80,19 +81,21 @@ export function VotingComponent() {
                   ],
                 })
               }
-              onError={(error) => onErrorAlert(`Error: ${error.message}`)}
+              onError={(error) =>
+                onErrorAlert(`Terjadi Kesalahan: ${error.message}`)
+              }
               onTransactionConfirmed={async () => {
-                onSuccessAlert("You have successfully voted.");
+                onSuccessAlert("Anda telah berhasil memberikan suara.");
                 handleReset();
               }}
               unstyled
-              className={`px-4 py-2 bg-white border-[3px]  hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold ${
+              className={`px-4 py-2 bg-white border-[3px] hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold ${
                 selectedCandidate === null || !signature || !isVotingActive
                   ? "opacity-50 cursor-not-allowed"
                   : "cursor-pointer"
               }`}
             >
-              {isVotingActive ? "Vote" : "Voting is not active"}
+              {isVotingActive ? "Pilih" : "Voting belum aktif"}
             </TransactionButton>
           )}
         </div>

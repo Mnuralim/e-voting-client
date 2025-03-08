@@ -11,6 +11,9 @@ import { CircleLoading } from "../../../../../public/image";
 import { useElection } from "../hooks/use-selection";
 import { InputField } from "./input-field";
 import { SelectField } from "./select-field";
+import { LoadingSpinner } from "@/app/_components/loading-spinner";
+import { NotFoundData } from "@/app/_components/not-found-data";
+import { ArrowRightIcon, PlusIcon, SearchIcon } from "../../_components/svg";
 
 interface Props {
   faculties: IFaculty[];
@@ -68,25 +71,32 @@ export const ElectionList = ({ faculties, programs }: Props) => {
   } = useElection(faculties, programs);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return (
     <div className="p-8">
       <div className="bg-[#111111] p-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-[#A1A1A1] font-bold text-xl">List Election</h2>
+          <h2 className="text-white font-bold text-2xl flex items-center">
+            <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+            Daftar Pemilihan
+          </h2>
           <div className="flex items-center justify-center gap-3">
-            <div className="relative">
+            <div className="relative w-full md:w-auto">
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <SearchIcon />
+              </div>
               <input
                 type="text"
                 value={search}
+                autoFocus
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full p-2 border rounded bg-[#333333] text-white text-sm placeholder-gray-400"
-                placeholder="Search"
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#222222] border border-gray-700 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent"
+                placeholder="Cari pemilihan..."
               />
               {isSearching && (
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                <div className="absolute inset-y-0 right-3 flex items-center">
                   <Image
                     alt="circle-loading"
                     src={CircleLoading}
@@ -99,11 +109,11 @@ export const ElectionList = ({ faculties, programs }: Props) => {
             </div>
             <div>
               <select
-                className="w-full p-2 border rounded bg-[#333333] text-white text-sm"
+                className="w-full px-4 py-2.5 cursor-pointer rounded-lg bg-[#222222] border border-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent appearance-none"
                 onChange={(e) => handleFilter(e.target.value)}
                 value={filterType === null ? "" : filterType}
               >
-                <option value="">All Types</option>
+                <option value="">Semua Jenis</option>
                 {electionType.map((type) => (
                   <option key={type.id} value={type.id}>
                     {type.name}
@@ -113,9 +123,10 @@ export const ElectionList = ({ faculties, programs }: Props) => {
             </div>
             <button
               onClick={() => handleOpenModal()}
-              className="border-[#444444] bg-[#444444] font-semibold text-white border-opacity-20 rounded-lg py-2 px-3 hover:bg-[#555555] transition-colors"
+              className="w-full md:w-auto cursor-pointer hover:bg-[#E6E600] bg-[#FFFF00] text-black font-medium rounded-lg px-5 py-2.5 transition-colors flex items-center justify-center gap-2"
             >
-              Add Election
+              <PlusIcon />
+              Tambah Pemilihan
             </button>
           </div>
         </div>
@@ -144,34 +155,33 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                 })) || []
               }
               columns={[
-                { header: "Election ID", key: "id" },
-                { header: "Name", key: "name" },
-                { header: "Type", key: "type" },
-                { header: "Faculty", key: "faculty" },
-                { header: "Program", key: "program" },
+                { header: "ID Pemilihan", key: "id" },
+                { header: "Nama", key: "name" },
+                { header: "Jenis", key: "type" },
+                { header: "Fakultas", key: "faculty" },
+                { header: "Program Studi", key: "program" },
               ]}
             />
           ) : (
-            <div className="text-center py-4 text-[#A1A1A1]">
-              Data tidak ditemukan
-            </div>
+            <NotFoundData />
           )}
         </div>
       </div>
       <Modal isOpen={openModal} onClose={handleCloseModal}>
         <div className="w-full p-16 overflow-y-auto h-full ">
-          <h1 className="font-bold text-xl mb-8">
-            {selectedId ? "Edit Election" : "Add Election"}
+          <h1 className="font-bold text-2xl text-white mb-6 flex items-center">
+            <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+            {selectedId ? "Edit Pemilihan" : "Tambah Pemilihan"}
           </h1>
           <InputField
             type="text"
-            name="Name"
+            name="Nama"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
           <SelectField
-            name="Type"
+            name="Jenis"
             value={type}
             options={electionType}
             onChange={(e) => handleSelectType(parseInt(e.target.value))}
@@ -179,7 +189,7 @@ export const ElectionList = ({ faculties, programs }: Props) => {
           />
           {type === 1 && (
             <SelectField
-              name="Faculty"
+              name="Fakultas"
               value={faculty as string}
               options={filteredFaculties}
               onChange={(e) => setFaculty(e.target.value)}
@@ -188,7 +198,7 @@ export const ElectionList = ({ faculties, programs }: Props) => {
           )}
           {type === 2 && (
             <SelectField
-              name="Program"
+              name="Program Studi"
               value={program as string}
               options={filteredPrograms}
               onChange={(e) => setProgram(e.target.value)}
@@ -204,14 +214,19 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                   params: [name, type, faculty || "", program || ""],
                 })
               }
-              className="bg-red-600 px-5 font-bold py-2.5 rounded-lg"
+              disabled={!name || !type || !faculty || !program}
+              unstyled
+              className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               onError={(error) => onErrorAlert(`${error.message}`)}
               onTransactionConfirmed={() => {
-                onSuccessAlert("Election created!");
+                onSuccessAlert("Pemilihan berhasil dibuat!");
                 handleReset();
               }}
             >
-              Submit
+              <span className="flex items-center justify-center gap-x-2">
+                <span>Kirim</span>
+                <ArrowRightIcon />
+              </span>
             </TransactionButton>
           </div>
         </div>

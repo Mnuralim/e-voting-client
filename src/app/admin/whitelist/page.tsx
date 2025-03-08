@@ -1,12 +1,12 @@
 import React from "react";
 import { AddressWhitelist } from "./_components/list";
 
-const Page = () => {
+function Page() {
   return (
     <main>
       <AddressWhitelist />
     </main>
   );
-};
+}
 
 export default Page;

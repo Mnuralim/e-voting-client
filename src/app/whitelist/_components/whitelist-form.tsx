@@ -15,9 +15,9 @@ export const WhitelistForm = () => {
   } = useWhitelist();
 
   return (
-    <div className="flex flex-col justify-center items-center md:w-2/5 gap-5 w-full">
+    <div className="flex flex-col justify-center items-center md:w-4/5 xl:w-2/5 gap-5 w-full">
       <h1 className="text-xl md:text-3xl font-bold text-center">
-        Whitelist Your Address
+        Daftarkan Alamat Dompet Anda
       </h1>
       <div className="md:w-36 mb-5">
         <WalletConnectButton />
@@ -46,13 +46,13 @@ export const WhitelistForm = () => {
             disabled={isLoading}
             className="px-4 w-3/4 py-2 bg-white border-[3px] cursor-pointer hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold"
           >
-            {isLoading ? "Whitelisting..." : "Whitelist"}
+            {isLoading ? "Proses Whitelist..." : "Whitelist"}
           </button>
         </>
       ) : (
         account?.address && (
           <p className="text-center text-sm text-[#A1A1A1]">
-            You are already whitelisted
+            Anda sudah terdaftar dalam whitelist
           </p>
         )
       )}

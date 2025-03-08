@@ -18,7 +18,7 @@ const Countdown = () => {
         const remainingTime = BigInt(isVotingActive[2]) - now;
 
         if (remainingTime <= BigInt(0)) {
-          setTimeLeft("Voting has ended");
+          setTimeLeft("Voting telah berakhir");
           clearInterval(interval);
         } else {
           const days = remainingTime / BigInt(24 * 60 * 60);
@@ -27,13 +27,13 @@ const Countdown = () => {
           const minutes = (remainingTime % BigInt(60 * 60)) / BigInt(60);
           const seconds = remainingTime % BigInt(60);
 
-          setTimeLeft(`${days}d : ${hours}h : ${minutes}m : ${seconds}s`);
+          setTimeLeft(`${days}h : ${hours}j : ${minutes}m : ${seconds}d`);
         }
       }, 1000);
 
       return () => clearInterval(interval);
     } else {
-      setTimeLeft("Voting not started yet");
+      setTimeLeft("Voting belum dimulai");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVotingActive?.[0], isVotingActive?.[2]]);
@@ -42,7 +42,7 @@ const Countdown = () => {
     <div className="rounded-2xl border border-dashed border-[#4F4F4F] bg-[#111111] w-full md:px-10 md:w-fit py-3">
       {isVotingActive?.[0] ? (
         <h2 className="text-xl font-bold text-[#D1D1D1] text-center">
-          Voting Ends in:
+          Voting Berakhir Dalam:
         </h2>
       ) : null}
       <p

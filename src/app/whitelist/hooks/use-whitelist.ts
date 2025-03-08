@@ -17,6 +17,9 @@ export const useWhitelist = () => {
   const handleWhitelistAddress = async () => {
     setIsLoading(true);
     try {
+      if (!token || !email) {
+        throw new Error("Token dan email wajib diisi");
+      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/whitelist`,
         {
@@ -37,10 +40,10 @@ export const useWhitelist = () => {
       if (!response.ok) {
         throw new Error(data.message);
       }
-      onSuccessAlert("Address whitelisted successfully");
+      onSuccessAlert("Alamat berhasil didaftarkan ke whitelist");
     } catch (error) {
       onErrorAlert(
-        error instanceof Error ? error.message : "Something went wrong"
+        error instanceof Error ? error.message : "Terjadi kesalahan"
       );
     } finally {
       setIsLoading(false);

@@ -45,12 +45,12 @@ export const Menu = ({
 
   return (
     <div
-      className={`bg-black/30 w-full h-screen fixed md:static top-[76px] left-0 backdrop-blur-md transform transition-all duration-300 md:backdrop-blur-none md:bg-transparent ${
+      className={`bg-black/30 w-full h-screen fixed lg:static top-[76px] left-0 backdrop-blur-md transform transition-all duration-300 lg:backdrop-blur-none ease-linear lg:bg-transparent ${
         isMenuOpen ? "left-0" : "left-[-100%]"
-      } md:left-0`}
+      } lg:left-0`}
     >
-      <div className="bg-[#1C1C1C] w-4/5 md:w-full px-4 h-full overflow-y-auto max-h-screen md:max-h-[calc(100vh-120px)]">
-        <div className="flex items-center justify-between py-3 md:hidden">
+      <div className="bg-[#1C1C1C] w-4/5 lg:w-full px-4 h-full overflow-y-auto max-h-screen lg:max-h-[calc(100vh-120px)]">
+        <div className="flex items-center justify-between py-3 lg:hidden">
           <p></p>
           <p className="font-bold text-lg">Tutorial</p>
           <button onClick={handleOpenMenu}>

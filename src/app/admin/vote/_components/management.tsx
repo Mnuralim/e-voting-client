@@ -11,20 +11,23 @@ export const Management = () => {
     useVotingManagement();
 
   return (
-    <div className="p-10">
-      <div className="bg-[#111111] p-5">
-        <h2 className="text-[#A1A1A1] font-bold text-xl">Voting Control</h2>
-        <div className="flex flex-col gap-3 mt-3">
+    <div className="p-6 rounded-xl bg-gray-950">
+      <div className="bg-[#111111] p-6 rounded-lg shadow-lg border border-gray-800">
+        <h2 className="text-white font-bold text-2xl flex items-center">
+          <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+          Kontrol Voting
+        </h2>
+        <div className="flex flex-col gap-4 mt-4">
           <div className="flex flex-col gap-2">
-            <label className="text-[#A1A1A1] font-bold">Voting Duration:</label>
+            <label className="text-white font-medium">Durasi Voting:</label>
             <select
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
-              className="p-2 rounded-lg border border-gray-600 bg-[#222222] text-white focus:outline-none"
+              className="p-3 rounded-lg border border-gray-700 bg-[#222222] text-white focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent transition-all duration-200"
               disabled={isVotingActive?.[0]}
             >
               <option value="" disabled>
-                Select duration
+                Pilih durasi
               </option>
               {durationOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -52,29 +55,40 @@ export const Management = () => {
                   : "pointer",
               userSelect: isVotingActive?.[0] ? "none" : "auto",
               WebkitUserSelect: isVotingActive?.[0] ? "none" : "auto",
-              backgroundColor: "#16a34a",
-              color: "white",
+              backgroundColor: "#FFFF00",
+              color: "#111111",
               fontWeight: "bold",
+              padding: "12px",
+              borderRadius: "8px",
+              transition: "all 0.2s ease",
+              boxShadow: "0 4px 6px rgba(255, 255, 0, 0.1)",
             }}
             onError={(error) => onErrorAlert(`${error.message}`)}
             onTransactionConfirmed={() => {
-              onSuccessAlert("Voting started!");
+              onSuccessAlert("Voting dimulai!");
               setDuration("");
             }}
           >
-            Start Vote
+            Mulai Voting
           </TransactionButton>
         </div>
       </div>
-      <div className="bg-[#111111] p-5 mt-5 flex items-center gap-2">
-        <p className="text-[#A1A1A1] font-bold text-xl">Voting Status:</p>
-        <p
-          className={`font-bold text-xl ${
-            isVotingActive?.[0] ? "text-green-600" : "text-red-600"
-          }`}
-        >
-          {isVotingActive?.[0] ? "Active" : "Inactive"}
-        </p>
+      <div className="bg-[#111111] p-6 mt-5 rounded-lg shadow-lg border border-gray-800 flex items-center gap-3">
+        <p className="text-[#FFFF00] font-bold text-xl">Status Voting:</p>
+        <div className="flex items-center">
+          <span
+            className={`h-3 w-3 rounded-full mr-2 ${
+              isVotingActive?.[0] ? "bg-green-500" : "bg-red-500"
+            }`}
+          ></span>
+          <p
+            className={`font-bold text-xl ${
+              isVotingActive?.[0] ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {isVotingActive?.[0] ? "Aktif" : "Tidak Aktif"}
+          </p>
+        </div>
       </div>
     </div>
   );

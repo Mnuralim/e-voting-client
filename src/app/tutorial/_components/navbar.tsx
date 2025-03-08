@@ -20,11 +20,11 @@ export const NavbarTutorial = ({
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsMobile(window.innerWidth < 768);
-      setIsMenuOpen(window.innerWidth >= 768);
+      setIsMobile(window.innerWidth < 1024);
+      setIsMenuOpen(window.innerWidth >= 1024);
 
       const handleResize = () => {
-        const mobile = window.innerWidth < 768;
+        const mobile = window.innerWidth < 1024;
         setIsMobile(mobile);
         if (!mobile) {
           setIsMenuOpen(true);
@@ -44,8 +44,8 @@ export const NavbarTutorial = ({
   };
 
   return (
-    <nav className="md:w-96 top-[76px] md:top-[120px] sticky md:fixed md:h-[calc(100vh-120px)] md:overflow-hidden md:border-r md:border-[#3D3D3D] z-10">
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#3D3D3D] md:hidden">
+    <nav className="lg:w-96 top-[76px] lg:top-[120px] sticky lg:fixed lg:h-[calc(100vh-120px)] lg:overflow-hidden lg:border-r md:border-[#3D3D3D] z-10">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[#3D3D3D] lg:hidden">
         <button onClick={handleOpenMenu}>
           <Image
             alt="hamburger-white"

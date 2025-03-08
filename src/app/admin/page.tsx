@@ -1,12 +1,7 @@
 import React from "react";
-import Countdown from "../_components/countdown";
 
-const Page = () => {
-  return (
-    <div>
-      <Countdown />
-    </div>
-  );
-};
+function Page() {
+  return <div></div>;
+}
 
 export default Page;

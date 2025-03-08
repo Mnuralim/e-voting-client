@@ -1,5 +1,4 @@
 "use client";
-
 import { getLoginPayload, isLoggedIn, login, logout } from "@/lib/api";
 import { client } from "@/lib/thirdweb-client";
 import { supportedWallets } from "@/lib/utils";
@@ -8,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import type { LoginPayload, VerifyLoginPayloadParams } from "thirdweb/auth";
 import { arbitrumSepolia } from "thirdweb/chains";
+
 const ConnectButton = dynamic(
   () => import("thirdweb/react").then((mod) => mod.ConnectButton),
   { ssr: false }
@@ -19,6 +19,7 @@ interface Props {
 
 export const WalletConnectButton = ({ admin = false }: Props) => {
   const router = useRouter();
+
   return (
     <div
       style={{
@@ -41,23 +42,19 @@ export const WalletConnectButton = ({ admin = false }: Props) => {
               },
             });
           },
-
           doLogin: async (params: VerifyLoginPayloadParams) => {
             const response = await login({
               params,
             });
-
             if (response.ok) {
               if (admin) {
                 router.push("/admin");
               }
             }
           },
-
           isLoggedIn: async () => {
             return await isLoggedIn();
           },
-
           doLogout: async () => {
             const response = await logout();
             if (admin) {
@@ -69,17 +66,18 @@ export const WalletConnectButton = ({ admin = false }: Props) => {
         }}
         connectButton={{
           style: {
-            paddingTop: "8px",
-            paddingBottom: "8px",
+            paddingTop: "10px",
+            paddingBottom: "10px",
             backgroundColor: "#FFFF00",
-            color: "#090909",
+            color: "#111111",
             fontWeight: "bold",
-            fontSize: "18px",
-            borderRadius: "10px",
+            fontSize: "16px",
+            borderRadius: "8px",
             border: "none",
             width: "100%",
             height: "100%",
-            boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+            boxShadow: "0px 4px 8px rgba(255, 255, 0, 0.2)",
+            transition: "all 0.2s ease",
           },
         }}
       />

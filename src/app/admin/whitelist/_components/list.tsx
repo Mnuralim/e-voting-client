@@ -1,4 +1,5 @@
 "use client";
+import { LoadingSpinner } from "@/app/_components/loading-spinner";
 import { Table } from "@/app/_components/table";
 import { contract } from "@/lib/contract";
 import React from "react";
@@ -11,14 +12,15 @@ export const AddressWhitelist = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
   return (
     <div className="p-8">
       <div className="bg-[#111111] p-5">
-        <div className="flex items-center justify-between">
-          <h2 className="text-[#A1A1A1] font-bold text-xl">List Whitelist</h2>
-        </div>
+        <h2 className="text-white font-bold text-2xl flex items-center">
+          <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+          Daftar Whitelist
+        </h2>
         <div className="mt-5">
           <Table
             showNumber
@@ -33,7 +35,7 @@ export const AddressWhitelist = () => {
             }
             columns={[
               {
-                header: "Owner",
+                header: "Pemilik",
                 key: "holder",
               },
               {

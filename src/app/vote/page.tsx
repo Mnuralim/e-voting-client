@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 function Page() {
   return (
-    <div className="mt-20 px-4 xl:mt-0 py-20 md:py-0">
+    <div className="mt-20 px-4 xl:mt-0 py-20 xl:py-0">
       <Suspense>
         <VotingComponent />
       </Suspense>

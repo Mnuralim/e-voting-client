@@ -1,36 +1,42 @@
 "use client";
 import React from "react";
-import {
-  ActivityIcon,
-  CandidateIcon,
-  GridIcon,
-  Logo,
-  SettingIcon,
-  StatisticIcon,
-  VoteIcon,
-  WhitelistIcon,
-} from "../../../../public/image";
 import { usePathname } from "next/navigation";
 import { useReadContract } from "thirdweb/react";
 import { contract } from "@/lib/contract";
 import { SidebarItem } from "./sidebar-item";
-import type { StaticImageData } from "next/image";
 import Image from "next/image";
+import { Logo } from "../../../../public/image";
+import {
+  GridSVG,
+  StudentSVG,
+  VoteSVG,
+  ActivitySVG,
+  BemSVG,
+  DpmSVG,
+  FacultySVG,
+  MpmSVG,
+  ProgramSVG,
+  SettingSVG,
+  StatisticSVG,
+  WhitelistSVG,
+} from "./svg";
 
 export type SidebarType =
   | {
       name: string;
       href: string;
-      searcParams?: string;
-      icon: StaticImageData;
+      key: string;
+      searchParams?: string;
+      icon: React.FC;
       show: boolean;
       subitems?: undefined;
     }
   | {
       name: string;
+      key: string;
       href?: string;
-      searcParams?: string;
-      icon: StaticImageData;
+      searchParams?: string;
+      icon: React.FC;
       show: boolean;
       subitems:
         | {
@@ -44,9 +50,8 @@ export type SidebarType =
         | undefined;
     };
 
-const Sidebar = () => {
+export const Sidebar = () => {
   const pathName = usePathname();
-
   const { data: elections } = useReadContract({
     contract,
     method: "getAllElections",
@@ -54,96 +59,103 @@ const Sidebar = () => {
 
   const siderBarItems: SidebarType[] = [
     {
-      name: "Dashboard",
+      name: "Beranda",
+      key: "",
       href: "/admin",
-      icon: GridIcon,
+      icon: GridSVG,
       show: true,
     },
     {
-      name: "Student Management",
+      name: "Manajemen Mahasiswa",
+      key: "student",
       href: "/admin/student",
-      icon: VoteIcon,
+      icon: StudentSVG,
       show: true,
     },
     {
-      name: "Voting Management",
+      name: "Manajemen Voting",
+      key: "vote",
       href: "/admin/vote",
-      icon: VoteIcon,
+      icon: VoteSVG,
       show: true,
     },
-
     {
-      name: "Election",
+      name: "Pemilihan",
+      key: "election",
       href: "/admin/election",
-      icon: StatisticIcon,
+      icon: StatisticSVG,
       show: true,
     },
     {
       name: "BEM",
-      href: `/admin/bem`,
-      searcParams: `?election=${
+      key: "bem",
+      href: `/admin/bem?election=${
         elections?.find((e) => e.electionType === 0)?.id
       }`,
-      icon: CandidateIcon,
-      show: elections?.find((e) => e.electionType === 0) ? true : false,
+      icon: BemSVG,
+      show: !!elections?.find((e) => e.electionType === 0),
     },
     {
       name: "MPM",
-      href: `/admin/mpm`,
-      searcParams: `?election=${
+      key: "mpm",
+      href: `/admin/mpm?election=${
         elections?.find((e) => e.electionType === 4)?.id
       }`,
-      icon: CandidateIcon,
-      show: elections?.find((e) => e.electionType === 4) ? true : false,
+      icon: MpmSVG,
+      show: !!elections?.find((e) => e.electionType === 4),
     },
     {
       name: "DPM",
-      href: `/admin/dpm`,
-      searcParams: `?election=${
+      key: "dpm",
+      href: `/admin/dpm?election=${
         elections?.find((e) => e.electionType === 3)?.id
       }`,
-      icon: CandidateIcon,
-      show: elections?.find((e) => e.electionType === 3) ? true : false,
+      icon: DpmSVG,
+      show: !!elections?.find((e) => e.electionType === 3),
     },
     {
-      name: "Faculty",
-      icon: CandidateIcon,
-      subitems: elections?.filter((e) => e.electionType === 1),
-      show: elections?.find((e) => e.electionType === 1) ? true : false,
+      name: "Fakultas",
+      key: "faculty",
+      icon: FacultySVG,
+      subitems: elections?.filter((e) => e.electionType === 1) ?? [],
+      show: !!elections?.find((e) => e.electionType === 1),
     },
     {
-      name: "Program",
-      icon: CandidateIcon,
-      subitems: elections?.filter((e) => e.electionType === 2),
-      show: elections?.find((e) => e.electionType === 2) ? true : false,
+      name: "Program Studi",
+      key: "program",
+      icon: ProgramSVG,
+      subitems: elections?.filter((e) => e.electionType === 2) ?? [],
+      show: !!elections?.find((e) => e.electionType === 2),
     },
     {
       name: "Whitelist",
+      key: "whitelist",
       href: "/admin/whitelist",
-      icon: WhitelistIcon,
+      icon: WhitelistSVG,
       show: true,
     },
-
     {
-      name: "Activity Log",
+      name: "Log Aktivitas",
+      key: "activity-log",
       href: "/admin/activity-log",
-      icon: ActivityIcon,
+      icon: ActivitySVG,
       show: true,
     },
     {
-      name: "Settings",
+      name: "Pengaturan",
+      key: "settings",
       href: "/admin/settings",
-      icon: SettingIcon,
+      icon: SettingSVG,
       show: true,
     },
   ];
 
   return (
-    <aside className="h-full col-span-1 border-r border-r-[#A1A1A1] border-r-opacity-30">
-      <div className="mt-10 flex items-center px-4 gap-1 justify-center">
+    <aside className="h-screen sticky top-0 w-1/6 bg-[#111111] border-r border-gray-800 overflow-y-auto custom-scrollbar shadow-md">
+      <div className="mt-8 flex items-center px-4 gap-1 justify-center">
         <Image src={Logo} alt="logo-icon" className="object-contain" />
       </div>
-      <div className="flex flex-col mt-12">
+      <div className="flex flex-col mt-12 pb-8 px-3">
         {siderBarItems.map((item) => (
           <SidebarItem key={item.name} item={item} pathName={pathName} />
         ))}
@@ -151,5 +163,3 @@ const Sidebar = () => {
     </aside>
   );
 };
-
-export default Sidebar;

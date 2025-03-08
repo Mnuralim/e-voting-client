@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ThirdwebProvider } from "thirdweb/react";
 import "./globals.css";
-import Navbar from "./_components/navbar";
+import { Navbar } from "./_components/navbar";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 

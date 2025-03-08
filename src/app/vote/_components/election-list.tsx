@@ -1,3 +1,4 @@
+import { LoadingSpinner } from "@/app/_components/loading-spinner";
 import { contract, nftContract } from "@/lib/contract";
 import React from "react";
 import { useActiveAccount, useReadContract } from "thirdweb/react";
@@ -24,14 +25,14 @@ export const ElectionList = ({
     params: [account?.address ? account.address : ""],
   });
 
-  if (isLoading) {
-    return <div className="text-white">Loading...</div>;
-  }
-
   const eligibleElections = elections?.filter(
     (item) =>
       ["BEM", "DPM", "MPM"].includes(item.name) || nftData?.includes(item.name)
   );
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="flex space-x-4 p-4 bg-[#74580F] rounded-md">

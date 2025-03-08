@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Sidebar from "./_components/sidebar";
 import { Navbar } from "./_components/navbar";
 import { Suspense } from "react";
+import { Sidebar } from "./_components/sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,11 +15,16 @@ export default async function AdminLayout({
 }>) {
   return (
     <Suspense>
-      <div className="min-h-screen grid grid-cols-6">
+      <div className="lg:hidden xl:hidden 2xl:hidden p-6 text-center bg-[#111111] border-2 border-[#FFFF00] rounded-lg shadow-lg hover:bg-[#222222] transition-all duration-300">
+        <p className="text-[#FFFF00] font-semibold text-lg">
+          Maaf, tampilan ini tidak tersedia untuk perangkat dengan layar kecil.
+        </p>
+      </div>
+      <div className="min-h-screen hidden lg:flex">
         <Sidebar />
-        <div className="col-span-5">
+        <div className="flex-1 overflow-x-hidden">
           <Navbar />
-          {children}
+          <main>{children}</main>
         </div>
       </div>
     </Suspense>

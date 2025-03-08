@@ -16,7 +16,7 @@ export const Tutorial = () => {
   } = useTutorial();
 
   return (
-    <div className="grid md:grid-cols-6">
+    <div className="grid lg:grid-cols-6">
       <NavbarTutorial
         onSubTutorialSelect={handleSubTutorialSelect}
         activeParentIndex={activeParentIndex}
@@ -24,7 +24,7 @@ export const Tutorial = () => {
       />
 
       {selectedSubTutorial ? (
-        <div className="p-4 md:col-span-5 md:col-start-2 md:ml-64 md:pl-8">
+        <div className="p-4 lg:col-span-5 lg:col-start-2 lg:ml-64 lg:pl-8">
           <h2 className="text-2xl font-bold mb-4 text-[#F6F6F6] mt-1">
             {selectedSubTutorial.title}
             <hr className="my-2 text-[#888888]" />
@@ -44,11 +44,11 @@ export const Tutorial = () => {
           />
         </div>
       ) : (
-        <div className="p-4 md:col-span-5 md:col-start-2 md:ml-64 md:pl-8">
+        <div className="p-4 lg:col-span-5 lg:col-start-2 lg:ml-64 lg:pl-8">
           <h2 className="text-2xl font-bold mb-4 text-[#F6F6F6] mt-12">
-            Getting Started
+            Mulai Sekarang
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {tutorials.map((tutorial, index) => (
               <div
                 key={index}

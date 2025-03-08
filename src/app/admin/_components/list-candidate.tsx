@@ -13,6 +13,8 @@ import Modal from "./modal";
 import { Table } from "@/app/_components/table";
 import { Form } from "@/app/_components/form";
 import { useCandidate } from "./hooks/use-candidate";
+import { LoadingSpinner } from "@/app/_components/loading-spinner";
+import { ArrowRightIcon, PlusIcon } from "./svg";
 
 interface Props {
   electionId: string;
@@ -38,19 +40,24 @@ export const ListCandidate = ({ electionId }: Props) => {
   } = useCandidate(electionId);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return (
     <div className="p-8">
       <div className="bg-[#111111] p-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-[#A1A1A1] font-bold text-xl">List Candidate</h2>
+          <h2 className="text-white font-bold text-2xl flex items-center">
+            <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+            Daftar Kandidat
+          </h2>
+
           <button
             onClick={() => handleOpenModal()}
-            className="border-white bg-white font-semibold text-black border-opacity-20 rounded-lg py-2.5 px-3"
+            className="w-full md:w-auto cursor-pointer hover:bg-[#E6E600] bg-[#FFFF00] text-black font-medium rounded-lg px-5 py-2.5 transition-colors flex items-center justify-center gap-2"
           >
-            Add Candidate
+            <PlusIcon />
+            Tambah Kandidat
           </button>
         </div>
         <div className="mt-5">
@@ -69,7 +76,7 @@ export const ListCandidate = ({ electionId }: Props) => {
                 render: (item) => item.id.toString(),
               },
               {
-                header: "Image",
+                header: "Foto",
                 key: "image",
                 render: (item) => (
                   <Image
@@ -82,15 +89,19 @@ export const ListCandidate = ({ electionId }: Props) => {
                 ),
               },
               {
-                header: "Name",
+                header: "Nama",
                 key: "name",
               },
               {
-                header: "Vision",
+                header: "Visi",
                 key: "vision",
               },
               {
-                header: "Vote Count",
+                header: "Misi",
+                key: "mission",
+              },
+              {
+                header: "Jumlah Suara",
                 key: "voteCount",
               },
             ]}
@@ -99,7 +110,7 @@ export const ListCandidate = ({ electionId }: Props) => {
       </div>
       <Modal isOpen={openModal} onClose={handleCloseModal}>
         <Form
-          title={selectedId ? "Edit Candidate" : "Add Candidate"}
+          title={selectedId ? "Edit Kandidat" : "Tambah Kandidat"}
           transactionButton={
             <TransactionButton
               type="button"
@@ -120,22 +131,27 @@ export const ListCandidate = ({ electionId }: Props) => {
                   ],
                 })
               }
-              className="bg-red-600 px-5 font-bold py-2.5 rounded-lg"
+              unstyled
+              disabled={!name || !vision || !mission}
+              className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               onError={(error) => onErrorAlert(`${error.message}`)}
               onTransactionConfirmed={() => {
                 handleCloseModal();
-                onSuccessAlert("Candidate added!");
+                onSuccessAlert("Kandidat berhasil ditambahkan!");
                 setName("");
                 setVision("");
                 setMission("");
               }}
             >
-              Submit
+              <span className="flex items-center justify-center gap-x-2">
+                <span>Kirim</span>
+                <ArrowRightIcon />
+              </span>
             </TransactionButton>
           }
           fields={[
             {
-              label: "Name",
+              label: "Nama",
               type: "text",
               name: "name",
               value: name,
@@ -143,7 +159,7 @@ export const ListCandidate = ({ electionId }: Props) => {
               onChange: (e) => setName(e.target.value),
             },
             {
-              label: "Image",
+              label: "Foto",
               type: "file",
               name: "image",
               preview: imagePreview as string,
@@ -154,7 +170,7 @@ export const ListCandidate = ({ electionId }: Props) => {
               required: true,
             },
             {
-              label: "Vision",
+              label: "Visi",
               type: "text",
               name: "vision",
               value: vision,
@@ -162,7 +178,7 @@ export const ListCandidate = ({ electionId }: Props) => {
               onChange: (e) => setVision(e.target.value),
             },
             {
-              label: "Mission",
+              label: "Misi",
               type: "text",
               name: "mission",
               value: mission,
