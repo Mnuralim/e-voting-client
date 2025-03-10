@@ -7,11 +7,11 @@ interface Props {
 }
 
 export const Pagination = ({ prev, next, onSelect }: Props) => (
-  <div className="flex justify-between mt-6 mb-8 items-center">
+  <div className="flex flex-col mt-6 mb-8 md:flex-row md:justify-between gap-x-4">
     {prev && (
       <button
         onClick={() => onSelect(prev)}
-        className="px-4 py-2 rounded-md flex items-center cursor-pointer"
+        className="text-sm py-2 rounded-md flex items-center cursor-pointer"
       >
         <span className="mr-2">←</span>
         <span>{prev.title}</span>
@@ -20,7 +20,7 @@ export const Pagination = ({ prev, next, onSelect }: Props) => (
     {next && (
       <button
         onClick={() => onSelect(next)}
-        className="px-4 py-2 rounded-md ml-auto flex items-center cursor-pointer"
+        className="text-sm py-2 rounded-md flex items-end justify-end cursor-pointer"
       >
         <span>{next.title}</span>
         <span className="ml-2">→</span>
