@@ -29,7 +29,10 @@ export function VotingComponent() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen text-white items-center justify-center">
+    <div
+      data-testid="voting-component"
+      className="flex flex-col min-h-screen text-white items-center justify-center"
+    >
       <ElectionList
         handleSelectElection={handleSelectElection}
         selectedElection={selectedElection as string}

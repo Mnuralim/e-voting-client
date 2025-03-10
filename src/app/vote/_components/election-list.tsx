@@ -35,9 +35,13 @@ export const ElectionList = ({
   }
 
   return (
-    <div className="flex space-x-4 p-4 bg-[#74580F] rounded-md">
+    <div
+      data-testid="election-list"
+      className="flex space-x-4 p-4 bg-[#74580F] rounded-md"
+    >
       {eligibleElections?.map((election) => (
         <button
+          data-testid="election-option"
           key={election.id}
           onClick={() => handleSelectElection(parseInt(election.id.toString()))}
           className={`px-4 py-2 rounded-md text-black text-sm font-bold ${

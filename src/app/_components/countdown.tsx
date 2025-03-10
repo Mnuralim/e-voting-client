@@ -39,7 +39,10 @@ const Countdown = () => {
   }, [isVotingActive?.[0], isVotingActive?.[2]]);
 
   return (
-    <div className="rounded-2xl border border-dashed border-[#4F4F4F] bg-[#111111] w-full md:px-10 md:w-fit py-3">
+    <div
+      data-testid="countdown"
+      className="rounded-2xl border border-dashed border-[#4F4F4F] bg-[#111111] w-full md:px-10 md:w-fit py-3"
+    >
       {isVotingActive?.[0] ? (
         <h2 className="text-xl font-bold text-[#D1D1D1] text-center">
           Voting Berakhir Dalam:
