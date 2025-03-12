@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken";
+import { decodeJwt } from "jose";
 
 export async function middleware(req: Request) {
   const { pathname } = new URL(req.url);
@@ -12,13 +12,14 @@ export async function middleware(req: Request) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    const decode = jwt.decode(token) as { ctx: { role: string } };
-    if (!decode) {
+    try {
+      const decode = decodeJwt(token) as { ctx?: { role?: string } };
+      if (!decode || decode.ctx?.role !== "admin") {
+        return NextResponse.redirect(new URL("/unauthorized", req.url));
+      }
+    } catch (error) {
+      console.log(error);
       return NextResponse.redirect(new URL("/login", req.url));
-    }
-
-    if (decode.ctx.role !== "admin") {
-      return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
   }
 
