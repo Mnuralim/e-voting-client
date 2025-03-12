@@ -7,14 +7,20 @@ export async function middleware(req: Request) {
   const cookieStore = cookies();
   const token = (await cookieStore).get("jwt")?.value;
 
+  console.log("Token:", token);
+
   if (pathname.startsWith("/admin")) {
     if (!token) {
+      console.log("No token found, redirecting to /login");
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
     try {
       const decode = decodeJwt(token) as { ctx?: { role?: string } };
+      console.log("Decoded Token:", decode);
+
       if (!decode || decode.ctx?.role !== "admin") {
+        console.log("User is not an admin, redirecting to /unauthorized");
         return NextResponse.redirect(new URL("/unauthorized", req.url));
       }
     } catch (error) {
@@ -22,6 +28,7 @@ export async function middleware(req: Request) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
+  console.log("Middleware passed, allowing request");
 
   return NextResponse.next();
 }
