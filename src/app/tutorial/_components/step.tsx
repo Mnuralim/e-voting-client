@@ -37,7 +37,7 @@ export const Step = ({ step, index }: Props) => (
         rel="noopener noreferrer"
         className="text-blue-600 font-bold hover:underline mt-2 block"
       >
-        Click Here
+        Klik Disini
       </Link>
     )}
   </div>

@@ -31,7 +31,7 @@ export const tutorials: Tutorial[] = [
         tutorials: [
           {
             title: "Install Misses Browser",
-            link: "https://play.google.com/store/apps/details?id=org.missesbrowser.missesbrowser",
+            link: "https://play.google.com/store/apps/details?id=site.mises.browser",
             description: "Install Misses Browser",
             image: "/image/test.jpg",
           },
@@ -57,7 +57,8 @@ export const tutorials: Tutorial[] = [
           {
             title: "Konfirmasi Instalasi",
             description:
-              "Sebuah pop-up akan muncul meminta izin untuk menambahkan ekstensi MetaMask. Klik 'Add Extension' untuk melanjutkan instalasi.",
+              "Sebuah pop-up akan muncul meminta izin untuk menambahkan ekstensi MetaMask. Klik 'Oke' untuk melanjutkan instalasi.",
+            image: "/image/tutorial/metamask-install-confirmation.jpeg",
           },
           {
             title: "Tunggu Proses Instalasi Selesai",
@@ -68,38 +69,44 @@ export const tutorials: Tutorial[] = [
           {
             title: "Buka MetaMask dan Mulai Proses Setup",
             description:
-              "Klik ikon MetaMask di toolbar browser untuk membukanya. Anda akan diarahkan ke halaman setup MetaMask. Klik 'Get Started' untuk memulai.",
-            image: "/image/test.jpg",
+              "Klik ikon MetaMask di toolbar browser untuk membukanya. Anda akan diarahkan ke halaman setup MetaMask. ",
+            image: "/image/tutorial/metamask-toolbar.jpeg",
           },
           {
-            title: "Pilih 'Create a Wallet'",
+            title: "Pilih 'Buat dompet baru'",
             description:
-              "MetaMask akan menawarkan dua opsi: 'Import Wallet' (untuk mengimpor dompet yang sudah ada) atau 'Create a Wallet' (untuk membuat dompet baru). Pilih 'Create a Wallet' jika Anda baru pertama kali menggunakan MetaMask.",
-            image: "/image/test.jpg",
+              "klik 'Buat dompet baru', Setujui ketentuan penggunaan dengan mencentang kotak yang tersedia.",
+            image: "/image/tutorial/mm-get-started.jpeg",
           },
           {
-            title: "Buat Password Baru",
+            title: "Setuju Ketentuan Penggunaan",
             description:
-              "Buat password yang kuat untuk mengamankan dompet MetaMask Anda. Password ini akan digunakan setiap kali Anda mengakses MetaMask di browser ini.",
-            image: "/image/test.jpg",
+              "Setujui ketentuan penggunaan dengan mencentang kotak yang tersedia, kemudian klik 'Saya setuju'.",
+            image: "/image/tutorial/mm-agrgree.jpeg",
           },
           {
-            title: "Simpan Secret Recovery Phrase",
+            title: "Buat kata sandi",
+            description:
+              "Buat kata sandi yang kuat untuk mengamankan dompet MetaMask Anda. Kata sandi ini akan digunakan setiap kali Anda mengakses MetaMask di browser ini.",
+            image: "/image/tutorial/mm-password.jpeg",
+          },
+          {
+            title: "Simpan frasa pemulihan rahasia",
             description:
               "MetaMask akan menampilkan 12 kata pemulihan (Secret Recovery Phrase). Catat kata-kata ini dengan urutan yang benar dan simpan di tempat yang aman. Frasa ini sangat penting untuk memulihkan dompet Anda jika Anda lupa password atau kehilangan akses.",
-            image: "/image/test.jpg",
+            image: "/image/tutorial/save-phrase.jpeg",
           },
           {
-            title: "Konfirmasi Secret Recovery Phrase",
+            title: "Konfirmasi frasa pemulihan rahasia",
             description:
               "Untuk memastikan Anda telah mencatat frasa dengan benar, MetaMask akan meminta Anda mengisi ulang frasa tersebut dengan urutan yang tepat. Ikuti petunjuk di layar untuk menyelesaikan proses ini.",
-            image: "/image/test.jpg",
+            image: "/image/tutorial/confirm-phrase.jpeg",
           },
           {
             title: "Selesai! Dompet MetaMask Anda Siap Digunakan",
             description:
               "Setelah menyelesaikan semua langkah di atas, dompet MetaMask Anda sudah siap digunakan. Anda dapat mulai mengelola aset kripto, mengirim/menerima token, dan berinteraksi dengan dApps.",
-            image: "/image/test.jpg",
+            image: "/image/tutorial/mm-finished.jpeg",
           },
         ],
       },
