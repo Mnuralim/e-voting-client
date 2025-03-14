@@ -11,6 +11,7 @@ export const useVoting = () => {
   );
   const [signedCandidate, setSignedCandidate] = useState<null | number>(null);
   const [signature, setSignature] = useState<`0x${string}` | null>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const account = useActiveAccount();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -18,6 +19,9 @@ export const useVoting = () => {
   const handleSelectElection = (id: number) => {
     replace(`/vote?election=${id}`);
     setSelectedCandidate(null);
+    setSignedCandidate(null);
+    setSignature(null);
+    setOpenModal(false);
   };
 
   const selectedElection = searchParams.get("election") || 0;
@@ -73,6 +77,14 @@ export const useVoting = () => {
     setSignature(null);
   };
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return {
     selectedCandidate,
     signedCandidate,
@@ -88,5 +100,8 @@ export const useVoting = () => {
     handleSignMessage,
     setSignature,
     handleReset,
+    openModal,
+    handleOpenModal,
+    handleCloseModal,
   };
 };

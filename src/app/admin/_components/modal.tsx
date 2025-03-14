@@ -70,7 +70,7 @@ const Modal = ({ children, isOpen, onClose }: Props) => {
         <div className="p-4 border-t border-[#FFFF00]/30 flex justify-end">
           <button
             type="button"
-            className="bg-[#111111] text-[#FFFF00] border border-[#FFFF00] hover:bg-[#FFFF00] hover:text-[#111111] px-4 py-2 rounded-md font-medium transition-all duration-200"
+            className="bg-[#111111] text-[#FFFF00] cursor-pointer border border-[#FFFF00] hover:bg-[#FFFF00] hover:text-[#111111] px-4 py-2 rounded-md font-medium transition-all duration-200"
             onClick={onClose}
           >
             Tutup
