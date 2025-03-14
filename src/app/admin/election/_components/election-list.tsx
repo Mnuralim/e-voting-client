@@ -182,7 +182,7 @@ export const ElectionList = ({ faculties, programs }: Props) => {
           />
           <SelectField
             name="Jenis"
-            value={type}
+            value={type as number}
             options={electionType}
             onChange={(e) => handleSelectType(parseInt(e.target.value))}
             required
@@ -213,13 +213,13 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                   method: "createElection",
                   params: [
                     name,
-                    type,
+                    type!,
                     faculty?.toLowerCase() || "",
                     program?.toLowerCase() || "",
                   ],
                 })
               }
-              disabled={!name || !type || !faculty || !program}
+              disabled={!name || type === null}
               unstyled
               className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               onError={(error) => onErrorAlert(`${error.message}`)}

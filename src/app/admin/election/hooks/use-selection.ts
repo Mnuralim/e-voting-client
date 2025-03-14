@@ -6,7 +6,7 @@ export const useElection = (faculties: IFaculty[], programs: IProgram[]) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
-  const [type, setType] = useState<number>(0);
+  const [type, setType] = useState<number | null>(null);
   const [faculty, setFaculty] = useState<string | null>(null);
   const [program, setProgram] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
