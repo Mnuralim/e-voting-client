@@ -37,7 +37,7 @@ export const ElectionList = ({
   return (
     <div
       data-testid="election-list"
-      className="flex space-x-4 p-4 bg-[#74580F] rounded-md"
+      className="flex gap-4 p-4 bg-[#74580F] rounded-md flex-wrap justify-center"
     >
       {eligibleElections?.map((election) => (
         <button
