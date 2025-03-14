@@ -211,7 +211,12 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                 prepareContractCall({
                   contract,
                   method: "createElection",
-                  params: [name, type, faculty || "", program || ""],
+                  params: [
+                    name,
+                    type,
+                    faculty?.toLowerCase() || "",
+                    program?.toLowerCase() || "",
+                  ],
                 })
               }
               disabled={!name || !type || !faculty || !program}

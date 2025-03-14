@@ -28,7 +28,15 @@ export const SelectField = ({
         Select {name}
       </option>
       {options.map((option) => (
-        <option key={option.id} value={option.id} className="bg-[#222222]">
+        <option
+          key={option.id}
+          value={
+            name === "Fakultas" || name === "Program Studi"
+              ? option.name
+              : option.id
+          }
+          className="bg-[#222222]"
+        >
           {option.name}
         </option>
       ))}

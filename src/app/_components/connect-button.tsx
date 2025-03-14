@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React from "react";
 import type { LoginPayload, VerifyLoginPayloadParams } from "thirdweb/auth";
-import { arbitrumSepolia } from "thirdweb/chains";
+import { sepolia } from "thirdweb/chains";
 
 const ConnectButton = dynamic(
   () => import("thirdweb/react").then((mod) => mod.ConnectButton),
@@ -28,7 +28,7 @@ export const WalletConnectButton = ({ admin = false }: Props) => {
     >
       <ConnectButton
         wallets={supportedWallets}
-        chain={arbitrumSepolia}
+        chain={sepolia}
         theme={"dark"}
         client={client}
         auth={{
@@ -38,7 +38,7 @@ export const WalletConnectButton = ({ admin = false }: Props) => {
             return await getLoginPayload({
               params: {
                 address: params.address,
-                chainId: arbitrumSepolia.id.toString(),
+                chainId: sepolia.id.toString(),
               },
             });
           },
