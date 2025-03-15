@@ -90,9 +90,10 @@ export async function getAllStudents(search?: string, tokenStatus?: string) {
   const response = await fetch(url.toString(), {
     method: "GET",
     credentials: "include",
-    next: {
-      revalidate: 3600 * 24,
-    },
+    cache: "no-store",
+    // next: {
+    //   revalidate: 3600 * 24,
+    // },
   });
 
   if (!response.ok) {
