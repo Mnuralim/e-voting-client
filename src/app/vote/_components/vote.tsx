@@ -44,7 +44,7 @@ export function VotingComponent() {
       />
       <h1 className="font-bold text-xl my-7">Lakukan Voting Sekarang</h1>
       <Countdown />
-      <div className="grid mt-10 gap-10 w-full md:grid-cols-2 xl:max-w-[40%]">
+      <div className="grid mt-10 gap-10 w-full md:grid-cols-2 xl:max-w-[70%]">
         {candidates?.map((candidate, index) => (
           <CandidateCard
             handleSelectCandidate={handleSelectCandidate}

@@ -144,7 +144,7 @@ export const Sidebar = () => {
     {
       name: "Pengaturan",
       key: "settings",
-      href: "/admin/settings",
+      href: "/admin/setting",
       icon: SettingSVG,
       show: true,
     },
