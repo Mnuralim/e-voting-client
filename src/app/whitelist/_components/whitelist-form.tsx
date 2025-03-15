@@ -44,7 +44,7 @@ export const WhitelistForm = () => {
           <button
             onClick={handleWhitelistAddress}
             disabled={isLoading}
-            className="px-4 w-3/4 py-2 bg-white border-[3px] cursor-pointer hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold"
+            className={`px-4 w-3/4 py-2 bg-white border-[3px] cursor-pointer hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold disabled:bg-[#74580F] disabled:border-[#74580F] disabled:cursor-not-allowed disabled:hover:bg-[#74580F] disabled:hover:border-[#74580F]`}
           >
             {isLoading ? "Proses Whitelist..." : "Whitelist"}
           </button>

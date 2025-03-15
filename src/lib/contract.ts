@@ -6,18 +6,18 @@ import {
   smartContractAddress,
 } from "@/lib/constant";
 import { client } from "@/lib/thirdweb-client";
-import { sepolia } from "thirdweb/chains";
+import { baseSepolia } from "thirdweb/chains";
 
 export const contract = getContract({
   address: smartContractAddress,
-  chain: sepolia,
+  chain: baseSepolia,
   client: client,
   abi: smartContractAbi,
 });
 
 export const nftContract = getContract({
   address: NFTContractAddress,
-  chain: sepolia,
+  chain: baseSepolia,
   client: client,
   abi: NFTContractAbi,
 });
