@@ -65,6 +65,7 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
       setFacultyId("");
       handleCloseModal();
       customRevalidation("/admin/student");
+      customRevalidation("/student");
     } catch (error: unknown) {
       if (error instanceof Error) {
         onErrorAlert(error.message);
