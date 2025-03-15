@@ -164,9 +164,7 @@ export async function deleteStudent(jwt: string, id: string) {
 export async function getAllFaculties() {
   const response = await fetch(`${API_URL}/students/faculties`, {
     method: "GET",
-    next: {
-      revalidate: 3600 * 24,
-    },
+    cache: "no-store",
   });
 
   if (!response.ok) {
@@ -183,9 +181,7 @@ export async function getAllFaculties() {
 export async function getAllPrograms() {
   const response = await fetch(`${API_URL}/students/programs`, {
     method: "GET",
-    next: {
-      revalidate: 3600 * 24,
-    },
+    cache: "no-store",
   });
 
   if (!response.ok) {
