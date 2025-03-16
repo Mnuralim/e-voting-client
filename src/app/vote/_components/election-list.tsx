@@ -27,7 +27,9 @@ export const ElectionList = ({
 
   const eligibleElections = elections?.filter(
     (item) =>
-      ["BEM", "DPM", "MPM"].includes(item.name) || nftData?.includes(item.name)
+      ["BEM".toLowerCase(), "DPM".toLowerCase(), "MPM".toLowerCase()].includes(
+        item.name.toLowerCase()
+      ) || nftData?.includes(item.name.toLowerCase())
   );
 
   if (isLoading) {
