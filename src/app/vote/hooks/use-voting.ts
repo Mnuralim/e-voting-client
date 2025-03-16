@@ -12,6 +12,7 @@ export const useVoting = () => {
   const [signedCandidate, setSignedCandidate] = useState<null | number>(null);
   const [signature, setSignature] = useState<`0x${string}` | null>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [alreadyVoted, setAlreadyVoted] = useState<null | string>(null);
   const account = useActiveAccount();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -103,5 +104,7 @@ export const useVoting = () => {
     openModal,
     handleOpenModal,
     handleCloseModal,
+    alreadyVoted,
+    setAlreadyVoted,
   };
 };

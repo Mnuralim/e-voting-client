@@ -3,6 +3,11 @@ import { getAllFaculties, getAllPrograms, getAllStudents } from "@/lib/api";
 import { cookies } from "next/headers";
 import { StudentList } from "../admin/student/_components/student-list";
 
+export const metadata = {
+  title: "Daftar mahasiswa",
+  description: "",
+};
+
 interface Props {
   searchParams: Promise<{
     [key: string]: string | undefined;

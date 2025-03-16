@@ -2,6 +2,10 @@ import React, { Suspense } from "react";
 import { VotingComponent } from "./_components/vote";
 
 export const dynamic = "force-dynamic";
+export const metadata = {
+  title: "Pilih Kandidat",
+  description: "",
+};
 
 function Page() {
   return (
