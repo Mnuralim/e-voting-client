@@ -1,6 +1,6 @@
 export const smartContractAddress =
-  "0xfeCC3cE73C7A49890Afe9a9F811d4714909257ee";
-export const NFTContractAddress = "0xcF8B0d340317b65AF6F00ab0986f9a584AC43000";
+  "0x7b5D51C50bfc3eb3172BCa4dFC6fFeA6Ab9e0979";
+export const NFTContractAddress = "0x9A3ad5dF43e513f7D0c99272EdDDDae4Fee7E484";
 export const smartContractAbi = [
   {
     inputs: [

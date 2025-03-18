@@ -11,6 +11,7 @@ import { useVoting } from "../hooks/use-voting";
 import { LoadingSpinner } from "@/app/_components/loading-spinner";
 import Modal from "@/app/admin/_components/modal";
 import Image from "next/image";
+import { Feedback } from "./feedback";
 
 export function VotingComponent() {
   const {
@@ -27,11 +28,30 @@ export function VotingComponent() {
     openModal,
     handleOpenModal,
     handleCloseModal,
+    hasVoted,
+    addVoteToStorage,
   } = useVoting();
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
+  const selectedCandidateData =
+    selectedCandidate !== null && candidates
+      ? candidates.find((c) => Number(c.id) === selectedCandidate)
+      : null;
+
+  const hasVotedInCurrentElection = hasVoted.find(
+    (v) => v.electionId.toString() === selectedElection.toString()
+  );
+
+  const isSignButtonDisabled = selectedCandidate === null;
+  const isVoteButtonDisabled = selectedCandidate === null || !signature;
+
+  const shouldShowConfirmModal =
+    openModal &&
+    selectedCandidate !== null &&
+    signature !== null &&
+    isVotingActive;
 
   return (
     <div
@@ -44,6 +64,7 @@ export function VotingComponent() {
       />
       <h1 className="font-bold text-xl my-7">Lakukan Voting Sekarang</h1>
       <Countdown />
+
       <div className="grid mt-10 gap-10 w-full md:grid-cols-2 xl:max-w-[70%]">
         {candidates?.map((candidate, index) => (
           <CandidateCard
@@ -61,41 +82,45 @@ export function VotingComponent() {
       </div>
 
       <div className="mt-10">
-        <div className="flex justify-center items-center flex-col gap-y-5">
-          {!signature ? (
-            <button
-              onClick={handleSignMessage}
-              disabled={selectedCandidate === null}
-              className={`px-4 py-2 bg-white border-[3px] hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold ${
-                selectedCandidate === null
-                  ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer"
-              }`}
-            >
-              Tanda Tangani Pesan
-            </button>
-          ) : (
-            <button
-              onClick={handleOpenModal}
-              disabled={selectedCandidate === null}
-              className={`px-4 py-2 bg-white border-[3px] hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold ${
-                selectedCandidate === null
-                  ? "opacity-50 cursor-not-allowed"
-                  : "cursor-pointer"
-              }`}
-            >
-              Pilih
-            </button>
-          )}
-        </div>
+        {isVotingActive && !hasVotedInCurrentElection && (
+          <div className="flex justify-center items-center flex-col gap-y-5">
+            {!signature ? (
+              <button
+                onClick={handleSignMessage}
+                disabled={isSignButtonDisabled}
+                className={`px-4 py-2 bg-white border-[3px] hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold ${
+                  isSignButtonDisabled
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
+                }`}
+              >
+                Tanda Tangani Pesan
+              </button>
+            ) : (
+              <button
+                onClick={handleOpenModal}
+                disabled={isVoteButtonDisabled}
+                className={`px-4 py-2 bg-white border-[3px] hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold ${
+                  isVoteButtonDisabled
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
+                }`}
+              >
+                Pilih
+              </button>
+            )}
+          </div>
+        )}
       </div>
+
+      {hasVotedInCurrentElection && (
+        <div className="px-4 w-full">
+          <Feedback txHash={hasVotedInCurrentElection.txHash} />
+        </div>
+      )}
+
       <Modal
-        isOpen={
-          openModal &&
-          selectedCandidate !== null &&
-          signature !== null &&
-          isVotingActive!
-        }
+        isOpen={shouldShowConfirmModal as boolean}
         onClose={handleCloseModal}
       >
         <div className="text-center">
@@ -108,14 +133,11 @@ export function VotingComponent() {
               Apakah Anda yakin memilih kandidat ini?
             </p>
 
-            {selectedCandidate !== null && candidates && (
+            {selectedCandidateData && (
               <div className="flex flex-col items-center">
                 <div className="w-28 h-28 rounded-full overflow-hidden mb-4 border-2 border-[#FFFF00] shadow-lg shadow-[#FFFF00]/20">
                   <Image
-                    src={
-                      candidates.find((c) => Number(c.id) === selectedCandidate)
-                        ?.image || "/image.png"
-                    }
+                    src={selectedCandidateData.image || "/image.png"}
                     width={400}
                     height={400}
                     draggable={false}
@@ -125,34 +147,22 @@ export function VotingComponent() {
                 </div>
 
                 <h3 className="font-bold text-xl text-[#FFFF00] mb-2">
-                  {
-                    candidates.find((c) => Number(c.id) === selectedCandidate)
-                      ?.name
-                  }
+                  {selectedCandidateData.name}
                 </h3>
 
                 <div className="w-full max-w-md mx-auto">
                   <div className="bg-[#222222] rounded-lg p-4 mb-3">
                     <h4 className="text-[#FFFF00] font-medium mb-2">Visi:</h4>
                     <p className="text-gray-300 text-sm">
-                      {
-                        candidates.find(
-                          (c) => Number(c.id) === selectedCandidate
-                        )?.vision
-                      }
+                      {selectedCandidateData.vision}
                     </p>
                   </div>
 
-                  {candidates.find((c) => Number(c.id) === selectedCandidate)
-                    ?.mission && (
+                  {selectedCandidateData.mission && (
                     <div className="bg-[#222222] rounded-lg p-4 mb-3">
                       <h4 className="text-[#FFFF00] font-medium mb-2">Misi:</h4>
                       <p className="text-gray-300 text-sm">
-                        {
-                          candidates.find(
-                            (c) => Number(c.id) === selectedCandidate
-                          )?.mission
-                        }
+                        {selectedCandidateData.mission}
                       </p>
                     </div>
                   )}
@@ -162,12 +172,7 @@ export function VotingComponent() {
                       Perolehan Suara Saat Ini:
                     </h4>
                     <p className="text-2xl font-bold text-white">
-                      {Number(
-                        candidates.find(
-                          (c) => Number(c.id) === selectedCandidate
-                        )?.voteCount
-                      )}{" "}
-                      suara
+                      {Number(selectedCandidateData.voteCount)} suara
                     </p>
                   </div>
                 </div>
@@ -177,9 +182,7 @@ export function VotingComponent() {
 
           <div className="flex justify-center gap-4">
             <TransactionButton
-              disabled={
-                selectedCandidate === null || !signature || !isVotingActive
-              }
+              disabled={isVoteButtonDisabled || !isVotingActive}
               transaction={() =>
                 prepareContractCall({
                   contract,
@@ -194,14 +197,18 @@ export function VotingComponent() {
               onError={(error) =>
                 onErrorAlert(`Terjadi Kesalahan: ${error.message}`)
               }
-              onTransactionConfirmed={async () => {
+              onTransactionConfirmed={async (tx) => {
                 onSuccessAlert("Anda telah berhasil memberikan suara.");
                 handleReset();
+                addVoteToStorage(
+                  selectedElection.toString(),
+                  tx.transactionHash
+                );
               }}
               theme={"light"}
               unstyled
               className={`bg-[#111111] cursor-pointer text-[#FFFF00] flex items-center justify-center border border-[#FFFF00] hover:bg-[#FFFF00] hover:text-[#111111] px-6 py-2 rounded-md font-medium transition-all duration-200 ${
-                selectedCandidate === null || !signature || !isVotingActive
+                isVoteButtonDisabled || !isVotingActive
                   ? "opacity-50 cursor-not-allowed"
                   : "cursor-pointer"
               }`}

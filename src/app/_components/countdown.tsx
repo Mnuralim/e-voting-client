@@ -45,7 +45,9 @@ const Countdown = () => {
     >
       {isVotingActive?.[0] ? (
         <h2 className="text-xl font-bold text-[#D1D1D1] text-center">
-          Voting Berakhir Dalam:
+          {timeLeft === "Voting telah berakhir"
+            ? null
+            : "Voting Berakhir Dalam:"}
         </h2>
       ) : null}
       <p

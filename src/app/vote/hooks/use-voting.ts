@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useActiveAccount, useReadContract } from "thirdweb/react";
 import { toBigInt } from "ethers";
 import { contract } from "@/lib/contract";
@@ -13,6 +13,10 @@ export const useVoting = () => {
   const [signature, setSignature] = useState<`0x${string}` | null>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [alreadyVoted, setAlreadyVoted] = useState<null | string>(null);
+  const [hasVoted, setHasVoted] = useState<
+    Array<{ electionId: string; txHash: string }>
+  >([]);
+
   const account = useActiveAccount();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -86,6 +90,30 @@ export const useVoting = () => {
     setOpenModal(false);
   };
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedVotedId = localStorage.getItem("hasVoted");
+      setHasVoted(savedVotedId ? JSON.parse(savedVotedId) : []);
+    }
+  }, []);
+
+  const saveVotedIdToStorage = (
+    newArrayVote: Array<{ electionId: string; txHash: string }>
+  ) => {
+    if (typeof window !== "undefined") {
+      setHasVoted(newArrayVote);
+      localStorage.setItem("hasVoted", JSON.stringify(newArrayVote));
+    }
+  };
+
+  const addVoteToStorage = (electionId: string, txHash: string) => {
+    const newVote = {
+      electionId,
+      txHash,
+    };
+    saveVotedIdToStorage([...hasVoted, newVote]);
+  };
+
   return {
     selectedCandidate,
     signedCandidate,
@@ -106,5 +134,7 @@ export const useVoting = () => {
     handleCloseModal,
     alreadyVoted,
     setAlreadyVoted,
+    hasVoted,
+    addVoteToStorage,
   };
 };

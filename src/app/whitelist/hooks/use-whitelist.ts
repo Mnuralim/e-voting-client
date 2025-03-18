@@ -9,7 +9,7 @@ export const useWhitelist = () => {
   const [email, setEmail] = useState<string>("");
 
   const account = useActiveAccount();
-  const { data: isWhitelisted } = useReadContract({
+  const { data: isWhitelisted, refetch } = useReadContract({
     contract,
     method: "getNFTHolders",
   });
@@ -40,6 +40,7 @@ export const useWhitelist = () => {
       if (!response.ok) {
         throw new Error(data.message);
       }
+      refetch();
       onSuccessAlert("Alamat berhasil didaftarkan ke whitelist");
     } catch (error) {
       onErrorAlert(
