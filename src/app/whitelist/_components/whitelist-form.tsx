@@ -140,7 +140,6 @@ export const WhitelistForm = () => {
               </li>
             </ul>
             <Link
-              target="_blank"
               href={"/tutorial"}
               className="inline-flex items-center gap-2 bg-[#FFFF00] text-[#111111] px-4 py-2 rounded-md font-bold hover:bg-[#D1BF00] transition-colors"
             >
