@@ -2,13 +2,18 @@ import { contract } from "@/lib/contract";
 import { useState } from "react";
 import { useReadContract } from "thirdweb/react";
 
-export const useElection = (faculties: IFaculty[], programs: IProgram[]) => {
+export const useElection = (
+  faculties: IFaculty[],
+  programs: IProgram[],
+  departements: IDepartement[]
+) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [type, setType] = useState<number | null>(null);
   const [faculty, setFaculty] = useState<string | null>(null);
   const [program, setProgram] = useState<string | null>(null);
+  const [departement, setDepartement] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [filterType, setFilterType] = useState<number | null>(null);
@@ -34,6 +39,7 @@ export const useElection = (faculties: IFaculty[], programs: IProgram[]) => {
   const handleSelectType = (type: number) => {
     setProgram(null);
     setFaculty(null);
+    setDepartement(null);
     setType(type);
   };
 
@@ -65,12 +71,25 @@ export const useElection = (faculties: IFaculty[], programs: IProgram[]) => {
       !elections?.find((e) => e.faculty.toLowerCase() === f.name.toLowerCase())
   );
   const filteredPrograms = programs.filter(
-    (p) => !elections?.find((e) => e.program === p.name)
+    (p) =>
+      !elections?.find((e) => e.program.toLowerCase() === p.name.toLowerCase())
   );
+
+  const filteredDepartements = departements.filter(
+    (d) =>
+      !elections?.find(
+        (e) => e.departement.toLowerCase() === d.name.toLowerCase()
+      )
+  );
+
+  console.log("elections", elections);
+  console.log("filteredDepartements", filteredDepartements);
+  console.log("departements", departements);
 
   const handleReset = () => {
     setFaculty(null);
     setProgram(null);
+    setDepartement(null);
     setName("");
     setType(0);
     setOpenModal(false);
@@ -83,6 +102,7 @@ export const useElection = (faculties: IFaculty[], programs: IProgram[]) => {
     type,
     faculty,
     program,
+    departement,
     search,
     isSearching,
     filterType,
@@ -92,6 +112,7 @@ export const useElection = (faculties: IFaculty[], programs: IProgram[]) => {
     filteredElections,
     filteredFaculties,
     filteredPrograms,
+    filteredDepartements,
     handleOpenModal,
     handleCloseModal,
     handleSelectType,
@@ -101,6 +122,7 @@ export const useElection = (faculties: IFaculty[], programs: IProgram[]) => {
     setType,
     setFaculty,
     setProgram,
+    setDepartement,
     handleReset,
   };
 };

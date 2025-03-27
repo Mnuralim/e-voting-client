@@ -72,7 +72,11 @@ export const SidebarItem = ({ item, pathName }: Props) => {
               <Link
                 key={subitem.name}
                 href={`/admin/${
-                  item.key === "faculty" ? "faculty" : "program"
+                  item.key === "faculty"
+                    ? "faculty"
+                    : item.key === "program"
+                    ? "program"
+                    : "departement"
                 }?election=${subitem.id}`}
                 className={`py-2 px-4 rounded-lg transition-all duration-200 text-sm ${
                   electionId === subitem.id.toString()

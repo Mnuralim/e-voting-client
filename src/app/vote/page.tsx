@@ -9,7 +9,7 @@ export const metadata = {
 
 function Page() {
   return (
-    <div className="w-full max-w-7xl mx-auto mt-[76px] md:mt-[120px]">
+    <div className="w-full max-w-7xl mx-auto mt-[76px] md:mt-[120px] px-4">
       <Suspense>
         <VotingComponent />
       </Suspense>

@@ -18,6 +18,7 @@ import { ArrowRightIcon, PlusIcon, SearchIcon } from "../../_components/svg";
 interface Props {
   faculties: IFaculty[];
   programs: IProgram[];
+  departements: IDepartement[];
 }
 
 const electionType = [
@@ -41,9 +42,13 @@ const electionType = [
     id: 4,
     name: "MPM",
   },
+  {
+    id: 5,
+    name: "HMJ",
+  },
 ];
 
-export const ElectionList = ({ faculties, programs }: Props) => {
+export const ElectionList = ({ faculties, programs, departements }: Props) => {
   const {
     openModal,
     selectedId,
@@ -51,6 +56,7 @@ export const ElectionList = ({ faculties, programs }: Props) => {
     type,
     faculty,
     program,
+    departement,
     search,
     isSearching,
     filterType,
@@ -66,9 +72,11 @@ export const ElectionList = ({ faculties, programs }: Props) => {
     handleFilter,
     setName,
     setFaculty,
+    setDepartement,
     setProgram,
     handleReset,
-  } = useElection(faculties, programs);
+    filteredDepartements,
+  } = useElection(faculties, programs, departements);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -152,6 +160,7 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                   )?.name,
                   faculty: election.faculty,
                   program: election.program,
+                  departement: election.departement,
                 })) || []
               }
               columns={[
@@ -159,6 +168,7 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                 { header: "Nama", key: "name" },
                 { header: "Jenis", key: "type" },
                 { header: "Fakultas", key: "faculty" },
+                { header: "Jurusan", key: "departement" },
                 { header: "Program Studi", key: "program" },
               ]}
             />
@@ -205,6 +215,15 @@ export const ElectionList = ({ faculties, programs }: Props) => {
               required
             />
           )}
+          {type === 5 && (
+            <SelectField
+              name="Jurusan"
+              value={departement as string}
+              options={filteredDepartements}
+              onChange={(e) => setDepartement(e.target.value)}
+              required
+            />
+          )}
           <div className="flex justify-end mt-10">
             <TransactionButton
               transaction={async () =>
@@ -216,10 +235,13 @@ export const ElectionList = ({ faculties, programs }: Props) => {
                     type!,
                     faculty?.toLowerCase() || "",
                     program?.toLowerCase() || "",
+                    departement?.toLowerCase() || "",
                   ],
                 })
               }
-              disabled={!name || type === null}
+              disabled={
+                !name || type === null || !faculty || !program || !departement
+              }
               unstyled
               className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               onError={(error) => onErrorAlert(`${error.message}`)}

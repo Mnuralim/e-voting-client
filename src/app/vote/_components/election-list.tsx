@@ -56,7 +56,13 @@ export const ElectionList = ({
             transition: "background-color 0.3s, color 0.3s",
           }}
         >
-          {election.name}
+          {election.electionType === 1
+            ? `BEM ${election.name}`
+            : election.electionType === 2
+            ? `HMPS ${election.name}`
+            : election.electionType === 5
+            ? `HMJ ${election.name}`
+            : election.name}
         </button>
       ))}
     </div>

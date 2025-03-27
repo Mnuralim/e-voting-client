@@ -154,7 +154,10 @@ export const Form = ({
           {!transactionButton ? (
             <button
               type="submit"
-              disabled={loading}
+              disabled={
+                loading ||
+                fields.some((field) => field.required && !field.value)
+              }
               className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (

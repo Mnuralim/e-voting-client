@@ -1,15 +1,20 @@
 import React from "react";
 import { ElectionList } from "./_components/election-list";
-import { getAllFaculties, getAllPrograms } from "@/lib/api";
+import { getAllDepartements, getAllFaculties, getAllPrograms } from "@/lib/api";
 
 const Page = async () => {
-  const [faculties, programs] = await Promise.all([
+  const [faculties, programs, departements] = await Promise.all([
     getAllFaculties(),
     getAllPrograms(),
+    getAllDepartements(),
   ]);
   return (
     <main>
-      <ElectionList faculties={faculties} programs={programs} />
+      <ElectionList
+        faculties={faculties}
+        programs={programs}
+        departements={departements}
+      />
     </main>
   );
 };

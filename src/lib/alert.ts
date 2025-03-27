@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { translateError } from "./utils";
 
 export const onSuccessAlert = (message: string) => {
   toast.success(message, {
@@ -13,8 +14,8 @@ export const onSuccessAlert = (message: string) => {
   });
 };
 
-export const onErrorAlert = (message: string) => {
-  toast.error(message, {
+export const onErrorAlert = (message: string, blockchain = true) => {
+  toast.error(blockchain ? translateError(message) : message, {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,

@@ -1,6 +1,6 @@
 export const smartContractAddress =
-  "0x4d066B9C6ddaFd45dD13Da0570bc9540A816fa4c";
-export const NFTContractAddress = "0x465441e830e32C4450d2ADF10489Be06C50dBb71";
+  "0x5eA2d59169046A60BCEf0AF5658E54A6BA6C0283";
+export const NFTContractAddress = "0x6385A2CCE2bef3A6BBf6888F9487254E6B7440aF";
 export const smartContractAbi = [
   {
     inputs: [
@@ -187,6 +187,12 @@ export const smartContractAbi = [
         name: "program",
         type: "string",
       },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "departement",
+        type: "string",
+      },
     ],
     name: "ElectionCreated",
     type: "event",
@@ -303,6 +309,11 @@ export const smartContractAbi = [
         name: "program",
         type: "string",
       },
+      {
+        internalType: "string",
+        name: "departement",
+        type: "string",
+      },
     ],
     name: "createElection",
     outputs: [],
@@ -355,6 +366,11 @@ export const smartContractAbi = [
       {
         internalType: "string",
         name: "program",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "departement",
         type: "string",
       },
       {
@@ -451,6 +467,11 @@ export const smartContractAbi = [
           {
             internalType: "string",
             name: "program",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "departement",
             type: "string",
           },
           {
@@ -901,6 +922,11 @@ export const NFTContractAbi = [
       },
       {
         internalType: "string",
+        name: "departement",
+        type: "string",
+      },
+      {
+        internalType: "string",
         name: "image",
         type: "string",
       },
@@ -1014,6 +1040,11 @@ export const NFTContractAbi = [
       {
         internalType: "string",
         name: "image",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "departement",
         type: "string",
       },
     ],

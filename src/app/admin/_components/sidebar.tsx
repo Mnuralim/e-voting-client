@@ -114,14 +114,21 @@ export const Sidebar = () => {
       show: !!elections?.find((e) => e.electionType === 3),
     },
     {
-      name: "Fakultas",
+      name: "BEM Fakultas",
       key: "faculty",
       icon: FacultySVG,
       subitems: elections?.filter((e) => e.electionType === 1) ?? [],
       show: !!elections?.find((e) => e.electionType === 1),
     },
     {
-      name: "Program Studi",
+      name: "HMJ",
+      key: "departement",
+      icon: FacultySVG,
+      subitems: elections?.filter((e) => e.electionType === 5) ?? [],
+      show: !!elections?.find((e) => e.electionType === 5),
+    },
+    {
+      name: "HMPS",
       key: "program",
       icon: ProgramSVG,
       subitems: elections?.filter((e) => e.electionType === 2) ?? [],

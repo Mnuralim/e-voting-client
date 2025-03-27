@@ -17,6 +17,7 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
   const [email, setEmail] = useState<string>("");
   const [programId, setProgramId] = useState<string>("");
   const [facultyId, setFacultyId] = useState<string>("");
+  const [departementId, setDepartementId] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [loadingGenerate, setLoadingGenerate] = useState<boolean>(false);
@@ -32,6 +33,9 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
         setEmail(student.email);
         setProgramId(student.program_id);
         setFacultyId(student.faculty_id);
+        if (student.departement_id) {
+          setDepartementId(student.departement_id);
+        }
       }
     }
   };
@@ -51,26 +55,28 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
         nim,
         email,
         programId,
-        facultyId
+        facultyId,
+        departementId === "" ? null : departementId
       );
       const resJson = await response.json();
       if (!response.ok) {
         throw new Error(resJson.message);
       }
-      onSuccessAlert("Success add student");
+      onSuccessAlert("Sukses menambahkan mahasiswa");
       setEmail("");
       setName("");
       setNim("");
       setProgramId("");
       setFacultyId("");
+      setDepartementId(null);
       handleCloseModal();
       customRevalidation("/admin/student");
       customRevalidation("/student");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        onErrorAlert(error.message);
+        onErrorAlert(error.message, false);
       } else {
-        onErrorAlert("Something went wrong");
+        onErrorAlert("Terjadi kesalahan", false);
       }
     } finally {
       setLoading(false);
@@ -89,13 +95,14 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
         nim,
         email,
         programId,
-        facultyId
+        facultyId,
+        departementId === "" ? null : departementId
       );
       const resJson = await response.json();
       if (!response.ok) {
         throw new Error(resJson.message);
       }
-      onSuccessAlert("Success update student");
+      onSuccessAlert("Sukses mengubah data mahasiswa");
       handleCloseModal();
       customRevalidation("/admin/student");
       setEmail("");
@@ -103,12 +110,13 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
       setNim("");
       setProgramId("");
       setFacultyId("");
+      setDepartementId(null);
       setSelectedId(null);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        onErrorAlert(error.message);
+        onErrorAlert(error.message, false);
       } else {
-        onErrorAlert("Something went wrong");
+        onErrorAlert("Terjadi kesalahan", false);
       }
     } finally {
       setLoading(false);
@@ -119,16 +127,17 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
     setLoadingDelete(true);
     try {
       const response = await deleteStudent(jwt, id);
+      const resJson = await response.json();
       if (!response.ok) {
-        throw new Error("Failed to delete student");
+        throw new Error(resJson.message);
       }
       customRevalidation("/admin/student");
-      onSuccessAlert("Success delete student");
+      onSuccessAlert("Sukses menghapus data mahasiswa");
     } catch (error) {
       if (error instanceof Error) {
-        onErrorAlert(error.message);
+        onErrorAlert(error.message, false);
       } else {
-        onErrorAlert("Something went wrong");
+        onErrorAlert("Terjadi kesalahan", false);
       }
     } finally {
       setLoadingDelete(false);
@@ -144,12 +153,12 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
         throw new Error(resJson.message);
       }
       customRevalidation("/admin/student");
-      onSuccessAlert("Success generate token");
+      onSuccessAlert("Sukses generate token");
     } catch (error) {
       if (error instanceof Error) {
-        onErrorAlert(error.message);
+        onErrorAlert(error.message, false);
       } else {
-        onErrorAlert("Something went wrong");
+        onErrorAlert("Terjadi kesalahan", false);
       }
     } finally {
       setLoadingGenerate(false);
@@ -165,12 +174,12 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
         throw new Error(resJson.message);
       }
       customRevalidation("/admin/student");
-      onSuccessAlert("Success generate token");
+      onSuccessAlert("Sukses generate token");
     } catch (error) {
       if (error instanceof Error) {
-        onErrorAlert(error.message);
+        onErrorAlert(error.message, false);
       } else {
-        onErrorAlert("Something went wrong");
+        onErrorAlert("Terjadi kesalahan", false);
       }
     } finally {
       setLoadingGenerate(false);
@@ -200,5 +209,7 @@ export const useStudent = (jwt: string, students: IStudent[]) => {
     setEmail,
     setProgramId,
     setFacultyId,
+    departementId,
+    setDepartementId,
   };
 };

@@ -112,7 +112,8 @@ export async function createStudent(
   nim: string,
   email: string,
   programId: string,
-  facultyId: string
+  facultyId: string,
+  departementId?: string | null
 ) {
   const response = await fetch(`${API_URL}/students`, {
     method: "POST",
@@ -121,7 +122,14 @@ export async function createStudent(
       Authorization: `Bearer ${jwt}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, nim, email, programId, facultyId }),
+    body: JSON.stringify({
+      name,
+      nim,
+      email,
+      programId,
+      facultyId,
+      departementId,
+    }),
   });
 
   return response;
@@ -134,7 +142,8 @@ export async function updateStudent(
   nim: string,
   email: string,
   programId: string,
-  facultyId: string
+  facultyId: string,
+  departementId?: string | null
 ) {
   const response = await fetch(`${API_URL}/students/${id}`, {
     method: "PATCH",
@@ -143,7 +152,14 @@ export async function updateStudent(
       Authorization: `Bearer ${jwt}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name, nim, email, programId, facultyId }),
+    body: JSON.stringify({
+      name,
+      nim,
+      email,
+      programId,
+      facultyId,
+      departementId,
+    }),
   });
 
   return response;
@@ -195,6 +211,25 @@ export async function getAllPrograms() {
   const resJson = await response.json();
 
   const data: IProgram[] = await resJson.programs;
+
+  return data;
+}
+
+export async function getAllDepartements() {
+  const response = await fetch(`${API_URL}/students/departements`, {
+    method: "GET",
+    next: {
+      revalidate: 3600 * 24,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const resJson = await response.json();
+
+  const data: IDepartement[] = await resJson.departements;
 
   return data;
 }

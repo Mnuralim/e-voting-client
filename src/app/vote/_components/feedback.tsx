@@ -44,7 +44,7 @@ export const Feedback = ({ txHash }: FeedbackProps) => {
         <p className="text-white text-sm mb-1">Transaction Hash:</p>
         <div className="flex items-center justify-between">
           <Link
-            href={`https://sepolia.basescan.org/tx/${txHash}`}
+            href={`https://base-sepolia.blockscout.com/tx/${txHash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#FFFF00] text-xs truncate hover:underline flex-grow"

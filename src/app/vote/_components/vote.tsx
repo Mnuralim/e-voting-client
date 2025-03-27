@@ -65,7 +65,7 @@ export function VotingComponent() {
       <h1 className="font-bold text-xl my-7">Lakukan Voting Sekarang</h1>
       <Countdown />
 
-      <div className="grid mt-10 gap-10 w-full md:grid-cols-2 xl:max-w-[70%]">
+      <div className="flex flex-wrap flex-col md:flex-row mt-10 gap-y-10 w-full xl:max-w-[70%]">
         {candidates?.map((candidate, index) => (
           <CandidateCard
             handleSelectCandidate={handleSelectCandidate}
@@ -194,9 +194,7 @@ export function VotingComponent() {
                   ],
                 })
               }
-              onError={(error) =>
-                onErrorAlert(`Terjadi Kesalahan: ${error.message}`)
-              }
+              onError={(error) => onErrorAlert(error.message)}
               onTransactionConfirmed={async (tx) => {
                 onSuccessAlert("Anda telah berhasil memberikan suara.");
                 handleReset();

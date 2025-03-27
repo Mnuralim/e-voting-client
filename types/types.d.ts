@@ -12,6 +12,11 @@ interface IProgram {
   name: string;
 }
 
+interface IDepartement {
+  id: string;
+  name: string;
+}
+
 interface IStudent {
   id: string;
   nim: string;
@@ -19,10 +24,12 @@ interface IStudent {
   email: string;
   program_id: string;
   faculty_id: string;
+  departement_id: string | null;
   createdAt: string;
   accessToken: IAccessToken;
   faculty: IFaculty;
   program: IProgram;
+  departement: IDepartement | null;
 }
 
 interface FormField {

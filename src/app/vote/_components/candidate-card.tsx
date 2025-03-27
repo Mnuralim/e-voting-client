@@ -26,7 +26,7 @@ export const CandidateCard = ({
     <div
       data-testid="candidate-card"
       onClick={() => handleSelectCandidate(id)}
-      className={`flex flex-col justify-between cursor-pointer rounded-2xl p-5 w-[80%] aspect-[226/290] items-center mx-auto transition-all duration-300 shadow-lg hover:shadow-xl ${
+      className={`flex flex-col justify-between cursor-pointer rounded-2xl p-5 w-full md:max-w-[40%] aspect-[226/290] items-center mx-auto transition-all duration-300 shadow-lg hover:shadow-xl ${
         selectedId === id
           ? "bg-gradient-to-br from-[#FFFF00] to-[#FFD700] border-2 border-[#A68B02]"
           : "bg-white hover:bg-gray-50"

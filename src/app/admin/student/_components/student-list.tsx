@@ -15,6 +15,7 @@ interface Props {
   students: IStudent[];
   faculties: IFaculty[];
   programs: IProgram[];
+  departements: IDepartement[];
   jwt: string;
   adminSection?: boolean;
 }
@@ -24,6 +25,7 @@ export const StudentList = ({
   faculties,
   programs,
   jwt,
+  departements,
   adminSection = false,
 }: Props) => {
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -54,6 +56,8 @@ export const StudentList = ({
     setEmail,
     setProgramId,
     setFacultyId,
+    setDepartementId,
+    departementId,
   } = useStudent(jwt, students);
 
   const handleSearch = useDebouncedCallback((searchValue: string) => {
@@ -237,6 +241,12 @@ export const StudentList = ({
                   render: (item) => item.faculty.name,
                 },
                 {
+                  header: "Jurusan",
+                  key: "departement",
+                  render: (item) =>
+                    item.departement ? item.departement.name : "-",
+                },
+                {
                   header: "Program Studi",
                   key: "program",
                   render: (item) => item.program.name,
@@ -290,6 +300,23 @@ export const StudentList = ({
                   value: faculty.id,
                   label: faculty.name,
                 })),
+              },
+              {
+                type: "select",
+                name: "departement",
+                label: "Jurusan",
+                value: departementId || "",
+                onChange: (e) => setDepartementId(e.target.value),
+                options: [
+                  {
+                    label: "Kosongkan",
+                    value: "",
+                  },
+                  ...departements.map((departement) => ({
+                    value: departement.id,
+                    label: departement.name,
+                  })),
+                ],
               },
               {
                 type: "select",

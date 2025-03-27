@@ -31,7 +31,9 @@ export const SelectField = ({
         <option
           key={option.id}
           value={
-            name === "Fakultas" || name === "Program Studi"
+            name === "Fakultas" ||
+            name === "Program Studi" ||
+            name === "Jurusan"
               ? option.name
               : option.id
           }

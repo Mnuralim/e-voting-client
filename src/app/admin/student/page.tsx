@@ -1,6 +1,11 @@
 import React from "react";
 import { StudentList } from "./_components/student-list";
-import { getAllFaculties, getAllPrograms, getAllStudents } from "@/lib/api";
+import {
+  getAllDepartements,
+  getAllFaculties,
+  getAllPrograms,
+  getAllStudents,
+} from "@/lib/api";
 import { cookies } from "next/headers";
 
 interface Props {
@@ -14,10 +19,11 @@ const Page = async ({ searchParams }: Props) => {
   const jwt = (await cookieStore).get("jwt")?.value;
   const { search = undefined, tokenStatus = undefined } = await searchParams;
 
-  const [students, faculties, programs] = await Promise.all([
+  const [students, faculties, programs, departements] = await Promise.all([
     getAllStudents(search, tokenStatus),
     getAllFaculties(),
     getAllPrograms(),
+    getAllDepartements(),
   ]);
 
   return (
@@ -28,6 +34,7 @@ const Page = async ({ searchParams }: Props) => {
         students={students}
         faculties={faculties}
         programs={programs}
+        departements={departements}
       />
     </div>
   );

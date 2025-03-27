@@ -44,7 +44,8 @@ export const useWhitelist = () => {
       onSuccessAlert("Alamat berhasil didaftarkan ke whitelist");
     } catch (error) {
       onErrorAlert(
-        error instanceof Error ? error.message : "Terjadi kesalahan"
+        error instanceof Error ? error.message : "Terjadi kesalahan",
+        false
       );
     } finally {
       setIsLoading(false);

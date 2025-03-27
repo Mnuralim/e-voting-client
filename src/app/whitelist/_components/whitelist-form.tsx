@@ -46,8 +46,8 @@ export const WhitelistForm = () => {
             />
             <button
               onClick={handleWhitelistAddress}
-              disabled={isLoading}
-              className={`px-4 w-3/4 py-2 bg-white border-[3px] cursor-pointer hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold disabled:bg-[#74580F] disabled:border-[#74580F] disabled:cursor-not-allowed disabled:hover:bg-[#74580F] disabled:hover:border-[#74580F]`}
+              disabled={isLoading || !token || !email}
+              className={`px-4 w-3/4 py-2 bg-white border-[3px] cursor-pointer hover:bg-[#D1BF00] border-[#D1BF00] rounded-lg text-black font-bold disabled:opacity-40 disabled:cursor-not-allowed `}
             >
               {isLoading ? "Proses Whitelist..." : "Whitelist"}
             </button>
@@ -102,7 +102,7 @@ export const WhitelistForm = () => {
               <div className="flex justify-between">
                 <span className="text-[#B0B0B0]">NFT Anda:</span>
                 <Link
-                  href={`https://sepolia.basescan.org/token/${NFTContractAddress}?a=${account?.address}`}
+                  href={`https://base-sepolia.blockscout.com/token/${NFTContractAddress}?a=${account?.address}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#FFFF00] underline hover:text-[#D1BF00] truncate ml-2 max-w-[180px]"
