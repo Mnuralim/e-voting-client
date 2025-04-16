@@ -99,8 +99,8 @@ export const ListCandidate = ({ electionId }: Props) => {
                 render: (item) => (
                   <div className="border-[3px] border-[#111111] overflow-hidden w-20 h-20 shadow-[2px_2px_0px_#111111]">
                     <Image
-                      width={800}
-                      height={800}
+                      width={400}
+                      height={400}
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover object-center"

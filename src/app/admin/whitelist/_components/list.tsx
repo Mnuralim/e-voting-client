@@ -14,6 +14,7 @@ export const AddressWhitelist = () => {
   if (isLoading) {
     return <LoadingSpinner />;
   }
+
   return (
     <div className="p-8 bg-white">
       <div className="border-[3px] border-[#111111] bg-white p-6 shadow-[4px_4px_0px_#111111] relative">

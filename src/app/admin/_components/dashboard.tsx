@@ -155,14 +155,14 @@ export const AdminDashboard = ({ studentCount }: Props) => {
                 <button
                   key={index}
                   data-id={index.toString()}
-                  className={`mx-2 px-4 py-2 font-bold text-[#111111] border-[3px] border-[#111111] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] ${
+                  className={`mx-2 px-4 py-2 font-bold text-[#111111] border-[3px] cursor-pointer border-[#111111] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] ${
                     activeElectionId === index.toString()
                       ? `bg-[#FF6B6B] shadow-[4px_4px_0px_#111111] rotate-[-1deg]`
                       : `bg-white shadow-[3px_3px_0px_#111111]`
                   }`}
                   onClick={() => setActiveElectionId(index.toString())}
                 >
-                  {election.name}
+                  {election.name.substring(0, 16)}...
                 </button>
               ))}
           </div>
