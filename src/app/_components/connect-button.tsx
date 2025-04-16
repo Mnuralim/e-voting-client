@@ -29,7 +29,7 @@ export const WalletConnectButton = ({ admin = false }: Props) => {
       <ConnectButton
         wallets={supportedWallets}
         chain={baseSepolia}
-        theme={"dark"}
+        theme={"light"}
         client={client}
         auth={{
           getLoginPayload: async (params: {
@@ -68,16 +68,17 @@ export const WalletConnectButton = ({ admin = false }: Props) => {
           style: {
             paddingTop: "10px",
             paddingBottom: "10px",
-            backgroundColor: "#FFFF00",
-            color: "#111111",
+            backgroundColor: "#FF3A5E",
+            color: "#FFFFFF",
             fontWeight: "bold",
             fontSize: "16px",
-            borderRadius: "8px",
-            border: "none",
+            borderRadius: "0px",
+            border: "3px solid #111111",
             width: "100%",
             height: "100%",
-            boxShadow: "0px 4px 8px rgba(255, 255, 0, 0.2)",
+            boxShadow: "4px 4px 0px #111111",
             transition: "all 0.2s ease",
+            cursor: "pointer",
           },
         }}
       />

@@ -13,38 +13,41 @@ export const SelectField = ({
   onChange,
   required = false,
 }: Props) => (
-  <div className="mb-4">
-    <label className="block mb-2 text-sm font-medium text-gray-300">
-      {name}
-      {required && <span className="text-[#FFFF00]">*</span>}
-    </label>
-    <select
-      value={value}
-      onChange={onChange}
-      required={required}
-      className="w-full p-3 border border-gray-700 rounded-lg bg-[#222222] text-white appearance-none focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent transition-all"
-    >
-      <option value={"select"} disabled>
-        Select {name}
-      </option>
-      {options.map((option) => (
-        <option
-          key={option.id}
-          value={
-            name === "Fakultas" ||
-            name === "Program Studi" ||
-            name === "Jurusan"
-              ? option.name
-              : option.id
-          }
-          className="bg-[#222222]"
-        >
-          {option.name}
+  console.log(value),
+  (
+    <div className="mb-4">
+      <label className="block text-white text-sm font-medium mb-2">
+        {name}
+        {required && <span className="text-red-500">*</span>}
+      </label>
+      <select
+        value={value === null ? "" : value}
+        onChange={onChange}
+        className="w-full p-3 border-[3px] border-[#111111] rounded-none bg-white text-[#111111] appearance-none focus:outline-none focus:ring-2 focus:ring-[#FFFF00] transition-all shadow-[3px_3px_0px_#111111]"
+        required={required}
+      >
+        <option value="" disabled>
+          Select {name}
         </option>
-      ))}
-    </select>
-    <p className="text-red-500 text-sm mt-1 invisible peer-invalid:visible">
-      {name} is required
-    </p>
-  </div>
+        {options.map((option) => (
+          <option
+            key={option.id}
+            value={
+              name === "Fakultas" ||
+              name === "Program Studi" ||
+              name === "Jurusan" ||
+              name === "DPM"
+                ? option.name
+                : option.id
+            }
+          >
+            {option.name}
+          </option>
+        ))}
+      </select>
+      {required && (value === null || value === "") && (
+        <p className="mt-1 text-sm text-red-500">{name} wajib diisi</p>
+      )}
+    </div>
+  )
 );

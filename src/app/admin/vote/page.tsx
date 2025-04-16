@@ -3,7 +3,7 @@ import { Management } from "./_components/management";
 
 function Page() {
   return (
-    <main>
+    <main className="mt-10">
       <Management />
     </main>
   );

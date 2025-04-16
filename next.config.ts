@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "715e18ea7a4b45c99b992e34fe0676c0.ipfscdn.io",
+        hostname: "dd834c54e841ca0c8f60a3ac5e2a142e.ipfscdn.io",
       },
     ],
   },

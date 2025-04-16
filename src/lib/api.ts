@@ -106,6 +106,23 @@ export async function getAllStudents(search?: string, tokenStatus?: string) {
   return data;
 }
 
+export async function getStudentsCount() {
+  const response = await fetch(`${API_URL}/students/count`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const resJson = await response.json();
+
+  const data: IstudentCount = await resJson.count;
+
+  return data;
+}
+
 export async function createStudent(
   jwt: string,
   name: string,

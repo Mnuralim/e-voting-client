@@ -41,18 +41,20 @@ const Countdown = () => {
   return (
     <div
       data-testid="countdown"
-      className="rounded-2xl border border-dashed border-[#4F4F4F] bg-[#111111] w-full md:px-10 md:w-fit py-3"
+      className="border-[3px] border-[#111111] bg-white p-4 shadow-[4px_4px_0px_#111111] w-full md:w-fit"
     >
       {isVotingActive?.[0] ? (
-        <h2 className="text-xl font-bold text-[#D1D1D1] text-center">
+        <h2 className="text-xl font-bold text-[#111111] text-center transform rotate-[-1deg]">
           {timeLeft === "Voting telah berakhir"
             ? null
             : "Voting Berakhir Dalam:"}
         </h2>
       ) : null}
       <p
-        className={`text-lg font-bold text-center ${
-          isVotingActive?.[0] ? "text-[#FFFF00]" : "text-red-500"
+        className={`text-2xl font-bold text-center ${
+          isVotingActive?.[0]
+            ? "bg-[#FFFF00] p-2 border-[3px] border-[#111111] shadow-[2px_2px_0px_#111111] inline-block mt-2"
+            : "bg-[#FF3A5E] p-2 text-white border-[3px] border-[#111111] shadow-[2px_2px_0px_#111111] inline-block mt-2"
         }`}
       >
         {timeLeft}

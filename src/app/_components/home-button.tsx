@@ -16,16 +16,16 @@ export const HomeButton = () => {
   }
 
   return (
-    <div className="flex items-center gap-x-4">
+    <div className="flex items-center gap-x-6 mt-4">
       <Link
         href={"/tutorial"}
-        className="border-2 font-bold border-[#FFFF00] xl:text-lg md:text-base rounded-lg text-sm py-2 px-10 text-white"
+        className="border-[3px] font-bold border-[#111111] xl:text-lg md:text-base rounded-none text-base py-3 px-8 bg-[#FF6B6B] text-[#111111] shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] transition-all"
       >
         Panduan
       </Link>
       <Link
         href={isVotingActive ? "/vote" : "/whitelist"}
-        className="border-2 border-[#FFFF00] font-bold text-[#090909] md:text-base rounded-lg py-2 text-sm bg-[#FFFF00] px-10 xl:text-lg "
+        className="border-[3px] border-[#111111] font-bold text-[#111111] md:text-base rounded-none py-3 text-base bg-[#FFFF00] px-8 xl:text-lg shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] transition-all"
       >
         {isVotingActive ? "Vote Now" : "Whitelist"}
       </Link>

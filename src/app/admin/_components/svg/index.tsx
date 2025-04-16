@@ -237,18 +237,14 @@ export const CloseIcon = () => (
 
 export const PlusIcon = () => (
   <svg
-    className="w-4 h-4"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
+    width="22"
+    height="22"
     viewBox="0 0 24 24"
-    stroke="currentColor"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="stroke-[#111111] stroke-[2.5px]"
   >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-    />
+    <path d="M12 5V19M5 12H19" strokeLinecap="square" strokeLinejoin="round" />
   </svg>
 );
 

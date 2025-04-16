@@ -15,10 +15,12 @@ export const AddressWhitelist = () => {
     return <LoadingSpinner />;
   }
   return (
-    <div className="p-8">
-      <div className="bg-[#111111] p-5">
-        <h2 className="text-white font-bold text-2xl flex items-center">
-          <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+    <div className="p-8 bg-white">
+      <div className="border-[3px] border-[#111111] bg-white p-6 shadow-[4px_4px_0px_#111111] relative">
+        <div className="absolute -top-5 -left-3 bg-[#FF3A5E] border-[3px] border-[#111111] px-4 py-1 rotate-[-2deg] shadow-[2px_2px_0px_#111111]">
+          <span className="font-bold text-white">WHITELIST</span>
+        </div>
+        <h2 className="text-[#111111] font-bold text-3xl rotate-[-1deg]">
           Daftar Whitelist
         </h2>
         <div className="mt-5">

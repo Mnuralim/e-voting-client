@@ -58,3 +58,7 @@ interface FormProps {
   showButton?: boolean;
   transactionButton?: React.ReactNode;
 }
+
+interface IstudentCount {
+  [electionId: string]: number;
+}

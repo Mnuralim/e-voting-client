@@ -25,42 +25,51 @@ export const Tutorial = () => {
 
       {selectedSubTutorial ? (
         <div className="p-4 lg:col-span-5 lg:col-start-2 lg:ml-64 lg:pl-8">
-          <h2 className="text-2xl font-bold mb-4 text-[#F6F6F6] mt-1">
-            {selectedSubTutorial.title}
-            <hr className="my-2 text-[#888888]" />
-          </h2>
-          <p className="text-[#E7E7E7] mb-4">
-            {selectedSubTutorial.description}
-          </p>
-          <div className="space-y-6">
+          <div className="bg-[#FF3A5E] p-3 w-fit transform rotate-[-1deg] mb-4">
+            <h2 className="text-2xl font-bold text-white">
+              {selectedSubTutorial.title}
+            </h2>
+          </div>
+
+          <div className="border-[3px] border-[#111111] bg-white shadow-[4px_4px_0px_#111111] p-6 mb-6 transform rotate-[0.5deg]">
+            <p className="text-[#111111] mb-4">
+              {selectedSubTutorial.description}
+            </p>
+          </div>
+
+          <div className="space-y-8">
             {selectedSubTutorial.tutorials.map((step, index) => (
               <Step key={index} step={step} index={index} />
             ))}
           </div>
-          <Pagination
-            prev={prevSubTutorial}
-            next={nextSubTutorial}
-            onSelect={handleSubTutorialSelect}
-          />
+
+          <div className="mt-8 transform rotate-[-0.5deg]">
+            <Pagination
+              prev={prevSubTutorial}
+              next={nextSubTutorial}
+              onSelect={handleSubTutorialSelect}
+            />
+          </div>
         </div>
       ) : (
         <div className="p-4 lg:col-span-5 lg:col-start-2 lg:ml-64 lg:pl-8">
-          <h2 className="text-2xl font-bold mb-4 text-[#F6F6F6] mt-12">
-            Mulai Sekarang
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="bg-[#FF3A5E] p-3 w-fit transform rotate-[-1deg] mb-6 mt-8">
+            <h2 className="text-2xl font-bold text-white">Mulai Sekarang</h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {tutorials.map((tutorial, index) => (
               <div
                 key={index}
-                className="w-full border border-[#4F4F4F] rounded-md p-4"
+                className="border-[3px] border-[#111111] bg-[#FFE962] shadow-[4px_4px_0px_#111111] p-5 transform rotate-[0.5deg]"
               >
                 <button
                   onClick={() => handleParentTutorialSelect(index)}
-                  className="mb-2 text-lg font-semibold text-[#D1BF00] hover:text-white cursor-pointer"
+                  className="mb-2 text-lg font-bold text-[#111111] hover:text-[#FF3A5E] transition-colors cursor-pointer"
                 >
                   {tutorial.title}
                 </button>
-                <p className="text-[#E7E7E7] text-sm">{tutorial.description}</p>
+                <p className="text-[#111111]">{tutorial.description}</p>
               </div>
             ))}
           </div>

@@ -33,47 +33,54 @@ export const Table = <T extends { id: string }>({
   loadingGenerate = false,
 }: TableProps<T>) => {
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-800">
-      <table className="min-w-full divide-y divide-gray-800">
+    <div className="overflow-x-auto border-[3px] border-[#111111] rounded-none shadow-[4px_4px_0px_#111111] bg-white  transform-gpu">
+      <table className="min-w-full divide-y divide-[#111111] border-collapse">
         <thead>
-          <tr>
+          <tr className="bg-[#FF3A5E] rotate-[0.3deg] transform-gpu">
             {showNumber && (
-              <th className="px-4 py-3.5 text-left text-xs font-medium uppercase tracking-wider text-gray-400 bg-[#191919]">
-                No
+              <th className="px-4 py-4 text-left font-bold uppercase tracking-wider text-black border-b-[3px] border-r-[3px] border-[#111111]">
+                <div className="rotate-[-1deg] transform-gpu">No</div>
               </th>
             )}
             {columns.map((column, index) => (
               <th
                 key={index}
-                className="px-4 py-3.5 text-left text-xs font-medium uppercase tracking-wider text-gray-400 bg-[#191919]"
+                className="px-4 py-4 text-left font-bold uppercase tracking-wider text-black border-b-[3px] border-r-[3px] border-[#111111]"
               >
-                {column.header}
+                <div className="rotate-[-1deg] transform-gpu">
+                  {column.header}
+                </div>
               </th>
             ))}
             {adminSection && (
               <>
-                <th className="px-4 py-3.5 text-left text-xs font-medium uppercase tracking-wider text-gray-400 bg-[#191919]">
-                  Status Token
+                <th className="px-4 py-4 text-left font-bold uppercase tracking-wider text-black border-b-[3px] border-r-[3px] border-[#111111]">
+                  <div className="rotate-[-1deg] transform-gpu">
+                    Status Token
+                  </div>
                 </th>
-                <th className="px-4 py-3.5 text-left text-xs font-medium uppercase tracking-wider text-gray-400 bg-[#191919]">
-                  Aksi
+                <th className="px-4 py-4 text-left font-bold uppercase tracking-wider text-black border-b-[3px] border-[#111111]">
+                  <div className="rotate-[-1deg] transform-gpu">Aksi</div>
                 </th>
               </>
             )}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-800 bg-[#171717]">
+        <tbody className="divide-y divide-[#111111] bg-white">
           {data.map((item, index) => (
-            <tr key={item.id} className="transition-colors hover:bg-[#1E1E1E]">
+            <tr
+              key={item.id}
+              className="hover:bg-[#FFE962] transition-all duration-100"
+            >
               {showNumber && (
-                <td className="px-4 py-3.5 text-sm text-gray-300 whitespace-nowrap">
+                <td className="px-4 py-3.5 text-sm font-medium text-[#111111] border-r-[3px] border-[#111111]">
                   {index + 1}
                 </td>
               )}
               {columns.map((column, colIndex) => (
                 <td
                   key={colIndex}
-                  className="px-4 py-3.5 text-sm text-gray-300 whitespace-nowrap"
+                  className="px-4 py-3.5 text-sm font-medium text-[#111111] border-r-[3px] border-[#111111]"
                 >
                   {column.render
                     ? column.render(item, index)
@@ -82,18 +89,18 @@ export const Table = <T extends { id: string }>({
               ))}
               {adminSection && (
                 <>
-                  <td className="px-4 py-3.5 text-sm whitespace-nowrap">
+                  <td className="px-4 py-3.5 text-sm font-medium border-r-[3px] border-[#111111]">
                     {(item as { accessToken?: { status: string } })?.accessToken
                       ?.status ? (
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        className={`px-2 py-1 border-[2px] border-[#111111] shadow-[2px_2px_0px_#111111] inline-block rotate-[-1deg] transform-gpu ${
                           (item as { accessToken?: { status: string } })
                             ?.accessToken?.status === "active"
-                            ? "bg-green-900 text-green-300"
+                            ? "bg-[#12E193] text-black"
                             : (item as { accessToken?: { status: string } })
                                 ?.accessToken?.status === "used"
-                            ? "bg-blue-900 text-blue-300"
-                            : "bg-gray-800 text-gray-400"
+                            ? "bg-[#6B66FF] text-black"
+                            : "bg-[#D3D3D3] text-black"
                         }`}
                       >
                         {
@@ -102,20 +109,20 @@ export const Table = <T extends { id: string }>({
                         }
                       </span>
                     ) : (
-                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-gray-800 text-gray-400">
+                      <span className="px-2 py-1 rotate-[-1deg] transform-gpu border-[2px] border-[#111111] shadow-[2px_2px_0px_#111111] inline-block bg-[#D3D3D3] text-black">
                         Inactive
                       </span>
                     )}
                   </td>
-                  <td className="px-4 py-3.5 text-sm">
-                    <div className="flex flex-col sm:flex-row gap-2">
+                  <td className="px-4 py-3.5">
+                    <div className="flex flex-col sm:flex-row gap-3">
                       {onUpdate && (
                         <button
-                          className="flex items-center justify-center px-2.5 py-1.5 text-xs font-medium rounded bg-[#2D2D2D] text-white hover:bg-[#3D3D3D] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#111111] focus:ring-[#FFFF00]"
+                          className="flex items-center justify-center px-3 py-2 font-bold border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] bg-[#12E193] text-black hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all"
                           onClick={() => onUpdate(item.id)}
                         >
                           <svg
-                            className="w-3.5 h-3.5 mr-1"
+                            className="w-4 h-4 mr-2"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -134,21 +141,21 @@ export const Table = <T extends { id: string }>({
                       {onDelete && (
                         <button
                           disabled={loadingDelete}
-                          className="flex items-center justify-center px-2.5 py-1.5 text-xs font-medium rounded bg-red-900 text-red-200 hover:bg-red-800 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#111111] focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex items-center justify-center px-3 py-2 font-bold border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] bg-[#FF6B6B] text-black hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                           onClick={() => onDelete(item.id)}
                         >
                           {loadingDelete ? (
                             <Image
                               alt="circle-loading"
                               src={CircleLoading}
-                              width={16}
-                              height={16}
+                              width={20}
+                              height={20}
                               className="animate-spin"
                             />
                           ) : (
                             <>
                               <svg
-                                className="w-3.5 h-3.5 mr-1"
+                                className="w-4 h-4 mr-2"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
@@ -170,21 +177,21 @@ export const Table = <T extends { id: string }>({
                         !(item as { accessToken?: unknown })?.accessToken && (
                           <button
                             disabled={loadingGenerate}
-                            className="flex items-center justify-center px-2.5 py-1.5 text-xs font-medium rounded bg-[#FFFF00] text-black hover:bg-[#E6E600] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#111111] focus:ring-[#FFFF00] disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex items-center justify-center px-3 py-2 font-bold border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] bg-[#FFFF00] text-black hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed rotate-[1deg] transform-gpu"
                             onClick={() => onGenerateToken(item.id)}
                           >
                             {loadingGenerate ? (
                               <Image
                                 alt="circle-loading"
                                 src={CircleLoading}
-                                width={16}
-                                height={16}
+                                width={20}
+                                height={20}
                                 className="animate-spin"
                               />
                             ) : (
                               <>
                                 <svg
-                                  className="w-3.5 h-3.5 mr-1"
+                                  className="w-4 h-4 mr-2"
                                   xmlns="http://www.w3.org/2000/svg"
                                   fill="none"
                                   viewBox="0 0 24 24"

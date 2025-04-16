@@ -1,5 +1,4 @@
 "use client";
-
 import { contract } from "@/lib/contract";
 import { TransactionButton } from "thirdweb/react";
 import Modal from "../../_components/modal";
@@ -14,6 +13,7 @@ import { SelectField } from "./select-field";
 import { LoadingSpinner } from "@/app/_components/loading-spinner";
 import { NotFoundData } from "@/app/_components/not-found-data";
 import { ArrowRightIcon, PlusIcon, SearchIcon } from "../../_components/svg";
+import { customRevalidation } from "@/actions";
 
 interface Props {
   faculties: IFaculty[];
@@ -51,7 +51,6 @@ const electionType = [
 export const ElectionList = ({ faculties, programs, departements }: Props) => {
   const {
     openModal,
-    selectedId,
     name,
     type,
     faculty,
@@ -67,15 +66,18 @@ export const ElectionList = ({ faculties, programs, departements }: Props) => {
     filteredPrograms,
     handleOpenModal,
     handleCloseModal,
-    handleSelectType,
     handleSearch,
     handleFilter,
-    setName,
-    setFaculty,
-    setDepartement,
-    setProgram,
     handleReset,
     filteredDepartements,
+    filteredDpm,
+    dpm,
+    handleNameChange,
+    handleTypeChange,
+    handleFacultyChange,
+    handleProgramChange,
+    handleDepartementChange,
+    handleDpmChange,
   } = useElection(faculties, programs, departements);
 
   if (isLoading) {
@@ -83,11 +85,13 @@ export const ElectionList = ({ faculties, programs, departements }: Props) => {
   }
 
   return (
-    <div className="p-8">
-      <div className="bg-[#111111] p-5">
+    <div className="p-8 bg-white">
+      <div className="border-[3px] border-[#111111] bg-white p-6 shadow-[4px_4px_0px_#111111] relative">
+        <div className="absolute -top-5 -left-3 bg-[#FF3A5E] border-[3px] border-[#111111] px-4 py-1 rotate-[-2deg] shadow-[2px_2px_0px_#111111]">
+          <span className="font-bold text-white">PEMILIHAN</span>
+        </div>
         <div className="flex items-center justify-between">
-          <h2 className="text-white font-bold text-2xl flex items-center">
-            <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+          <h2 className="text-[#111111] font-bold text-3xl rotate-[-1deg]">
             Daftar Pemilihan
           </h2>
           <div className="flex items-center justify-center gap-3">
@@ -100,7 +104,7 @@ export const ElectionList = ({ faculties, programs, departements }: Props) => {
                 value={search}
                 autoFocus
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#222222] border border-gray-700 text-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 border-[3px] border-[#111111] bg-[#FFE962] text-black font-bold text-base placeholder-gray-700 focus:outline-none shadow-[4px_4px_0px_#111111] hover:shadow-[2px_2px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all rotate-[-1deg]"
                 placeholder="Cari pemilihan..."
               />
               {isSearching && (
@@ -108,16 +112,16 @@ export const ElectionList = ({ faculties, programs, departements }: Props) => {
                   <Image
                     alt="circle-loading"
                     src={CircleLoading}
-                    width={20}
-                    height={20}
-                    className="animate-spin"
+                    width={24}
+                    height={24}
+                    className="animate-spin border-[2px] border-[#111111] rounded-full rotate-[3deg]"
                   />
                 </div>
               )}
             </div>
             <div>
               <select
-                className="w-full px-4 py-2.5 cursor-pointer rounded-lg bg-[#222222] border border-gray-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent appearance-none"
+                className="w-full px-4 py-3 appearance-none border-[3px] border-[#111111] bg-[#12E193] text-black font-bold text-base focus:outline-none shadow-[4px_4px_0px_#111111] hover:shadow-[2px_2px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
                 onChange={(e) => handleFilter(e.target.value)}
                 value={filterType === null ? "" : filterType}
               >
@@ -131,10 +135,10 @@ export const ElectionList = ({ faculties, programs, departements }: Props) => {
             </div>
             <button
               onClick={() => handleOpenModal()}
-              className="w-full md:w-auto cursor-pointer hover:bg-[#E6E600] bg-[#FFFF00] text-black font-medium rounded-lg px-5 py-2.5 transition-colors flex items-center justify-center gap-2"
+              className="border-[3px] border-[#111111] bg-[#FFFF00] px-4 py-2 font-bold text-[#111111] shadow-[3px_3px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#111111] transition-all flex items-center gap-2"
             >
               <PlusIcon />
-              Tambah Pemilihan
+              TAMBAH PEMILIHAN
             </button>
           </div>
         </div>
@@ -177,50 +181,60 @@ export const ElectionList = ({ faculties, programs, departements }: Props) => {
           )}
         </div>
       </div>
+
       <Modal isOpen={openModal} onClose={handleCloseModal}>
-        <div className="w-full p-16 overflow-y-auto h-full ">
-          <h1 className="font-bold text-2xl text-white mb-6 flex items-center">
-            <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
-            {selectedId ? "Edit Pemilihan" : "Tambah Pemilihan"}
+        <div className="w-full p-6 md:p-8 overflow-y-auto bg-white border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] rotate-[-0.5deg] transform-gpu">
+          <h1 className="font-bold text-2xl text-[#111111] mb-6 flex items-center rotate-[-1deg] transform-gpu">
+            <span className="w-4 h-8 bg-[#FF3A5E] mr-3 rotate-[2deg] transform-gpu border-[2px] border-[#111111]"></span>
+            Tambah Pemilihan
           </h1>
           <InputField
             type="text"
             name="Nama"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleNameChange}
             required
           />
           <SelectField
             name="Jenis"
-            value={type as number}
+            value={type === null ? "" : type}
             options={electionType}
-            onChange={(e) => handleSelectType(parseInt(e.target.value))}
+            onChange={handleTypeChange}
             required
           />
-          {type === 1 && (
+          {type !== null && type !== 0 && type !== 4 && (
             <SelectField
               name="Fakultas"
-              value={faculty as string}
-              options={filteredFaculties}
-              onChange={(e) => setFaculty(e.target.value)}
+              value={faculty === null ? "" : faculty}
+              options={type === 1 ? filteredFaculties : faculties}
+              onChange={handleFacultyChange}
               required
             />
           )}
           {type === 2 && (
             <SelectField
               name="Program Studi"
-              value={program as string}
+              value={program === null ? "" : program}
               options={filteredPrograms}
-              onChange={(e) => setProgram(e.target.value)}
+              onChange={handleProgramChange}
+              required
+            />
+          )}
+          {type === 3 && (
+            <SelectField
+              name="DPM"
+              value={dpm === null ? "" : dpm}
+              options={filteredDpm}
+              onChange={handleDpmChange}
               required
             />
           )}
           {type === 5 && (
             <SelectField
               name="Jurusan"
-              value={departement as string}
+              value={departement === null ? "" : departement}
               options={filteredDepartements}
-              onChange={(e) => setDepartement(e.target.value)}
+              onChange={handleDepartementChange}
               required
             />
           )}
@@ -232,22 +246,30 @@ export const ElectionList = ({ faculties, programs, departements }: Props) => {
                   method: "createElection",
                   params: [
                     name,
-                    type!,
+                    type || 0,
                     faculty?.toLowerCase() || "",
                     program?.toLowerCase() || "",
                     departement?.toLowerCase() || "",
+                    dpm?.toLowerCase() || "",
                   ],
                 })
               }
               disabled={
-                !name || type === null || !faculty || !program || !departement
+                !name ||
+                type === null ||
+                (type === 1 && !faculty) ||
+                (type === 2 && !program) ||
+                (type === 3 && !dpm) ||
+                (type === 5 && !departement)
               }
               unstyled
-              className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="bg-[#FFFF00] hover:bg-[#E6E600] text-black cursor-pointer font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               onError={(error) => onErrorAlert(`${error.message}`)}
               onTransactionConfirmed={() => {
                 onSuccessAlert("Pemilihan berhasil dibuat!");
                 handleReset();
+                handleCloseModal();
+                customRevalidation("/admin");
               }}
             >
               <span className="flex items-center justify-center gap-x-2">

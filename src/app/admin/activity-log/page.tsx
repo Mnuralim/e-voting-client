@@ -2,7 +2,7 @@ import { Logs } from "./_components/logs";
 
 export default async function Page() {
   return (
-    <div>
+    <div className="p-8">
       <Logs />
     </div>
   );

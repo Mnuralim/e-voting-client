@@ -7,106 +7,78 @@ interface FeedbackProps {
 
 export const Feedback = ({ txHash }: FeedbackProps) => {
   return (
-    <div className="bg-[#1A1A1A] border-2 border-[#FFFF00] w-full rounded-lg p-6 my-8 max-w-md mx-auto text-center shadow-lg shadow-[#FFFF00]/10">
-      <div className="flex justify-center mb-4">
-        <svg
-          width="48"
-          height="48"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="12"
-            cy="12"
-            r="10"
-            fill="#1A1A1A"
-            stroke="#FFFF00"
-            strokeWidth="2"
-          />
-          <path
-            d="M8 12L10.5 14.5L16 9"
-            stroke="#FFFF00"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-      <h3 className="text-[#FFFF00] font-bold text-xl mb-3">
-        Terimakasih anda sudah melakukan vote!
-      </h3>
-      <p className="text-white mb-4">
-        Partisipasi Anda sangat berarti untuk kemajuan bersama.
-      </p>
-
-      <div className="bg-[#111111] p-3 rounded-md border border-[#FFFF00]/30 mb-4">
-        <p className="text-white text-sm mb-1">Transaction Hash:</p>
-        <div className="flex items-center justify-between">
-          <Link
-            href={`https://base-sepolia.blockscout.com/tx/${txHash}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#FFFF00] text-xs truncate hover:underline flex-grow"
-            title="View transaction in explorer"
-          >
-            {txHash}
-          </Link>
-          <button
-            onClick={() => navigator.clipboard.writeText(txHash)}
-            className="text-white hover:text-[#FFFF00] ml-2 flex-shrink-0"
-            title="Copy to clipboard"
-          >
+    <div className="w-full max-w-md mx-auto my-8">
+      <div className="bg-[#FFE962] border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] p-6 rotate-[-1deg]">
+        <div className="flex justify-center mb-4">
+          <div className="bg-[#12E193] rounded-full w-16 h-16 flex items-center justify-center border-[3px] border-[#111111] transform rotate-[2deg]">
             <svg
-              width="16"
-              height="16"
+              width="32"
+              height="32"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <rect
-                x="6"
-                y="6"
-                width="12"
-                height="12"
-                rx="1"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
               <path
-                d="M17 6V5C17 3.89543 16.1046 3 15 3H5C3.89543 3 3 3.89543 3 5V15C3 16.1046 3.89543 17 5 17H6"
-                stroke="currentColor"
-                strokeWidth="2"
+                d="M8 12L10.5 14.5L16 9"
+                stroke="#111111"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
-          </button>
+          </div>
         </div>
-      </div>
 
-      <div className="bg-[#111111] p-4 rounded-md border border-[#FFFF00]/30">
-        <p className="text-white mb-2">Silakan isi form feedback berikut:</p>
-        <Link
-          target="_blank"
-          href={"/"}
-          className="inline-flex items-center gap-2 bg-[#FFFF00] text-[#111111] px-4 py-2 rounded-md font-bold hover:bg-[#D1BF00] transition-colors"
-        >
-          <span>Isi Feedback</span>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7 17L17 7M17 7H7M17 7V17"
-              stroke="#111111"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Link>
+        <h3 className="text-[#111111] font-bold text-xl mb-3 text-center transform rotate-[1deg]">
+          Terimakasih anda sudah melakukan vote!
+        </h3>
+
+        <p className="text-[#111111] mb-6 text-center">
+          Partisipasi Anda sangat berarti untuk kemajuan bersama.
+        </p>
+
+        <div className="bg-white border-[3px] border-[#111111] p-4 mb-6 shadow-[4px_4px_0px_#111111] rotate-[-1deg]">
+          <p className="text-[#111111] font-bold mb-2">Transaction Hash:</p>
+          <div className="flex items-center justify-between">
+            <Link
+              href={`https://base-sepolia.blockscout.com/tx/${txHash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF3A5E] text-sm truncate hover:underline flex-grow font-medium"
+              title="View transaction in explorer"
+            >
+              {txHash}
+            </Link>
+            <button
+              onClick={() => navigator.clipboard.writeText(txHash)}
+              className="bg-[#FF3A5E] text-white p-2 border-[2px] border-[#111111] ml-2 flex-shrink-0 shadow-[2px_2px_0px_#111111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#111111] transition-all"
+              title="Copy to clipboard"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="6"
+                  y="6"
+                  width="12"
+                  height="12"
+                  rx="1"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M17 6V5C17 3.89543 16.1046 3 15 3H5C3.89543 3 3 3.89543 3 5V15C3 16.1046 3.89543 17 5 17H6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

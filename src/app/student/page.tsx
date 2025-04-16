@@ -31,7 +31,7 @@ async function Page({ searchParams }: Props) {
   ]);
 
   return (
-    <div className="mt-20 w-full max-w-7xl mx-auto">
+    <div className="mt-24 w-full max-w-7xl mx-auto">
       <StudentList
         jwt={jwt!}
         students={students}

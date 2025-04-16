@@ -11,19 +11,26 @@ export const Management = () => {
     useVotingManagement();
 
   return (
-    <div className="p-6 rounded-xl bg-gray-950">
-      <div className="bg-[#111111] p-6 rounded-lg shadow-lg border border-gray-800">
-        <h2 className="text-white font-bold text-2xl flex items-center">
-          <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
-          Kontrol Voting
-        </h2>
-        <div className="flex flex-col gap-4 mt-4">
-          <div className="flex flex-col gap-2">
-            <label className="text-white font-medium">Durasi Voting:</label>
+    <div className="p-8 bg-white border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] relative">
+      <div className="absolute -top-4 -left-2 bg-[#FF3A5E] border-[3px] border-[#111111] px-4 py-1 rotate-[-2deg] shadow-[2px_2px_0px_#111111]">
+        <span className="font-bold text-white">KONTROL</span>
+      </div>
+
+      <h2 className="text-[#111111] font-bold text-3xl mt-4 mb-6 rotate-[-1deg]">
+        Kontrol Voting
+      </h2>
+
+      <div className="flex flex-col gap-5 mt-6">
+        <div className="flex flex-col gap-2 relative">
+          <div className="absolute -top-3 -left-2 bg-[#12E193] border-[2px] border-[#111111] px-3 py-0.5 rotate-[-1deg] shadow-[2px_2px_0px_#111111]">
+            <span className="font-bold text-sm text-[#111111]">DURASI</span>
+          </div>
+
+          <div className="bg-[#FFE962] border-[3px] border-[#111111] p-4 pt-6 shadow-[4px_4px_0px_#111111]">
             <select
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
-              className="p-3 rounded-lg border border-gray-700 bg-[#222222] text-white focus:outline-none focus:ring-2 focus:ring-[#FFFF00] focus:border-transparent transition-all duration-200"
+              className="w-full p-3 border-[3px] border-[#111111] bg-white font-medium text-[#111111] focus:outline-none hover:bg-[#FFFF00] transition-all hover:translate-x-[1px] hover:translate-y-[1px]"
               disabled={isVotingActive?.[0]}
             >
               <option value="" disabled>
@@ -36,6 +43,9 @@ export const Management = () => {
               ))}
             </select>
           </div>
+        </div>
+
+        <div className="mt-2">
           <TransactionButton
             transaction={() =>
               prepareContractCall({
@@ -45,48 +55,35 @@ export const Management = () => {
               })
             }
             disabled={isVotingActive?.[0] || !account?.address || !duration}
-            style={{
-              pointerEvents: isVotingActive?.[0] ? "none" : "auto",
-              opacity:
-                isVotingActive?.[0] || !account?.address || !duration ? 0.5 : 1,
-              cursor:
-                isVotingActive?.[0] || !account?.address || !duration
-                  ? "not-allowed"
-                  : "pointer",
-              userSelect: isVotingActive?.[0] ? "none" : "auto",
-              WebkitUserSelect: isVotingActive?.[0] ? "none" : "auto",
-              backgroundColor: "#FFFF00",
-              color: "#111111",
-              fontWeight: "bold",
-              padding: "12px",
-              borderRadius: "8px",
-              transition: "all 0.2s ease",
-              boxShadow: "0 4px 6px rgba(255, 255, 0, 0.1)",
-            }}
+            className={`w-full border-[3px] border-[#111111] font-bold text-xl p-4 shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] transition-all ${
+              isVotingActive?.[0] || !account?.address || !duration
+                ? "bg-gray-300 text-[#555555]"
+                : "bg-[#FFFF00] text-[#111111]"
+            }`}
             onError={(error) => onErrorAlert(`${error.message}`)}
             onTransactionConfirmed={() => {
               onSuccessAlert("Voting dimulai!");
               setDuration("");
             }}
           >
-            Mulai Voting
+            MULAI VOTING
           </TransactionButton>
         </div>
       </div>
-      <div className="bg-[#111111] p-6 mt-5 rounded-lg shadow-lg border border-gray-800 flex items-center gap-3">
-        <p className="text-[#FFFF00] font-bold text-xl">Status Voting:</p>
-        <div className="flex items-center">
-          <span
-            className={`h-3 w-3 rounded-full mr-2 ${
-              isVotingActive?.[0] ? "bg-green-500" : "bg-red-500"
+
+      <div className="mt-8 relative">
+        <div className="absolute -top-3 -left-2 bg-[#FF6B6B] border-[2px] border-[#111111] px-3 py-0.5 rotate-[1deg] shadow-[2px_2px_0px_#111111]">
+          <span className="font-bold text-sm text-white">STATUS</span>
+        </div>
+
+        <div className="flex items-center gap-4 bg-white border-[3px] border-[#111111] p-4 shadow-[4px_4px_0px_#111111]">
+          <div
+            className={`h-6 w-6 rounded-full border-[2px] border-[#111111] ${
+              isVotingActive?.[0] ? "bg-[#12E193]" : "bg-[#FF3A5E]"
             }`}
-          ></span>
-          <p
-            className={`font-bold text-xl ${
-              isVotingActive?.[0] ? "text-green-500" : "text-red-500"
-            }`}
-          >
-            {isVotingActive?.[0] ? "Aktif" : "Tidak Aktif"}
+          ></div>
+          <p className="font-bold text-xl text-[#111111]">
+            {isVotingActive?.[0] ? "AKTIF" : "TIDAK AKTIF"}
           </p>
         </div>
       </div>

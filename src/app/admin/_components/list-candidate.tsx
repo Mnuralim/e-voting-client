@@ -2,7 +2,11 @@
 
 import { contract } from "@/lib/contract";
 import React from "react";
-import { TransactionButton } from "thirdweb/react";
+import {
+  TransactionButton,
+  useActiveAccount,
+  useReadContract,
+} from "thirdweb/react";
 import { resolveScheme, upload } from "thirdweb/storage";
 import { client } from "@/lib/thirdweb-client";
 import { prepareContractCall } from "thirdweb";
@@ -21,6 +25,14 @@ interface Props {
 }
 
 export const ListCandidate = ({ electionId }: Props) => {
+  const account = useActiveAccount();
+  const { data: getRole } = useReadContract({
+    contract,
+    method: "getRole",
+    params: [account?.address as string],
+  });
+
+  const isPawasra = getRole === 2;
   const {
     openModal,
     selectedId,
@@ -44,22 +56,28 @@ export const ListCandidate = ({ electionId }: Props) => {
   }
 
   return (
-    <div className="p-8">
-      <div className="bg-[#111111] p-5">
-        <div className="flex items-center justify-between">
-          <h2 className="text-white font-bold text-2xl flex items-center">
-            <span className="w-1 h-8 bg-[#FFFF00] mr-3 rounded-full"></span>
+    <div className="p-8 bg-white">
+      <div className="border-[3px] border-[#111111] bg-white p-6 shadow-[4px_4px_0px_#111111] relative">
+        <div className="absolute -top-5 -left-3 bg-[#FF3A5E] border-[3px] border-[#111111] px-4 py-1 rotate-[-2deg] shadow-[2px_2px_0px_#111111]">
+          <span className="font-bold text-white">KANDIDAT</span>
+        </div>
+
+        <div className="flex items-center justify-between mb-8 mt-3">
+          <h2 className="text-[#111111] font-bold text-3xl rotate-[-1deg]">
             Daftar Kandidat
           </h2>
 
-          <button
-            onClick={() => handleOpenModal()}
-            className="w-full md:w-auto cursor-pointer hover:bg-[#E6E600] bg-[#FFFF00] text-black font-medium rounded-lg px-5 py-2.5 transition-colors flex items-center justify-center gap-2"
-          >
-            <PlusIcon />
-            Tambah Kandidat
-          </button>
+          {!isPawasra && (
+            <button
+              onClick={() => handleOpenModal()}
+              className="border-[3px] border-[#111111] bg-[#FFFF00] px-4 py-2 font-bold text-[#111111] shadow-[3px_3px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_#111111] transition-all flex items-center gap-2"
+            >
+              <PlusIcon />
+              TAMBAH KANDIDAT
+            </button>
+          )}
         </div>
+
         <div className="mt-5">
           <Table
             data={
@@ -71,43 +89,46 @@ export const ListCandidate = ({ electionId }: Props) => {
             }
             columns={[
               {
-                header: "No",
+                header: "NO",
                 key: "id",
                 render: (item) => item.id.toString(),
               },
               {
-                header: "Foto",
+                header: "FOTO",
                 key: "image",
                 render: (item) => (
-                  <Image
-                    width={800}
-                    height={800}
-                    src={item.image}
-                    alt={item.name}
-                    className="rounded-full aspect-square w-20 h-auto object-cover object-center"
-                  />
+                  <div className="border-[3px] border-[#111111] overflow-hidden w-20 h-20 shadow-[2px_2px_0px_#111111]">
+                    <Image
+                      width={800}
+                      height={800}
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
                 ),
               },
               {
-                header: "Nama",
+                header: "NAMA",
                 key: "name",
               },
               {
-                header: "Visi",
+                header: "VISI",
                 key: "vision",
               },
               {
-                header: "Misi",
+                header: "MISI",
                 key: "mission",
               },
               {
-                header: "Jumlah Suara",
+                header: "JUMLAH SUARA",
                 key: "voteCount",
               },
             ]}
           />
         </div>
       </div>
+
       <Modal isOpen={openModal} onClose={handleCloseModal}>
         <Form
           title={selectedId ? "Edit Kandidat" : "Tambah Kandidat"}
@@ -133,7 +154,7 @@ export const ListCandidate = ({ electionId }: Props) => {
               }
               unstyled
               disabled={!name || !vision || !mission}
-              className="bg-[#FFFF00] hover:bg-[#E6E600] text-black font-medium rounded-lg py-2.5 px-5 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="bg-[#FFFF00] text-[#111111] font-bold border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] rounded-none py-2.5 px-5 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed rotate-[1deg] transform-gpu"
               onError={(error) => onErrorAlert(`${error.message}`)}
               onTransactionConfirmed={() => {
                 handleCloseModal();

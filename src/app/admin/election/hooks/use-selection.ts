@@ -7,39 +7,39 @@ export const useElection = (
   programs: IProgram[],
   departements: IDepartement[]
 ) => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [name, setName] = useState<string>("");
+  const [openModal, setOpenModal] = useState(false);
+  const [name, setName] = useState("");
   const [type, setType] = useState<number | null>(null);
   const [faculty, setFaculty] = useState<string | null>(null);
   const [program, setProgram] = useState<string | null>(null);
   const [departement, setDepartement] = useState<string | null>(null);
-  const [search, setSearch] = useState<string>("");
-  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [dpm, setDpm] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [filterType, setFilterType] = useState<number | null>(null);
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const [isFiltering, setIsFiltering] = useState(false);
 
   const { data: elections, isLoading } = useReadContract({
     contract,
     method: "getAllElections",
   });
 
-  const handleOpenModal = (id?: string) => {
+  const handleOpenModal = () => {
     setOpenModal(true);
-    if (id) {
-      setSelectedId(id);
-    }
+    handleReset();
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    setSelectedId(null);
+    handleReset();
   };
 
   const handleSelectType = (type: number) => {
+    // Reset related fields when election type changes
     setProgram(null);
     setFaculty(null);
     setDepartement(null);
+    setDpm(null);
     setType(type);
   };
 
@@ -82,27 +82,52 @@ export const useElection = (
       )
   );
 
-  console.log("elections", elections);
-  console.log("filteredDepartements", filteredDepartements);
-  console.log("departements", departements);
+  const filteredDpm = faculties.filter(
+    (f) => !elections?.find((e) => e.dpm.toLowerCase() === f.name.toLowerCase())
+  );
 
   const handleReset = () => {
     setFaculty(null);
     setProgram(null);
     setDepartement(null);
+    setDpm(null);
     setName("");
-    setType(0);
-    setOpenModal(false);
+    setType(null);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = parseInt(e.target.value);
+    handleSelectType(value);
+  };
+
+  const handleFacultyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFaculty(e.target.value);
+  };
+
+  const handleProgramChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setProgram(e.target.value);
+  };
+
+  const handleDepartementChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDepartement(e.target.value);
+  };
+
+  const handleDpmChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDpm(e.target.value);
   };
 
   return {
     openModal,
-    selectedId,
     name,
     type,
     faculty,
     program,
     departement,
+    dpm,
     search,
     isSearching,
     filterType,
@@ -113,16 +138,17 @@ export const useElection = (
     filteredFaculties,
     filteredPrograms,
     filteredDepartements,
+    filteredDpm,
     handleOpenModal,
     handleCloseModal,
-    handleSelectType,
     handleSearch,
     handleFilter,
-    setName,
-    setType,
-    setFaculty,
-    setProgram,
-    setDepartement,
     handleReset,
+    handleNameChange,
+    handleTypeChange,
+    handleFacultyChange,
+    handleProgramChange,
+    handleDepartementChange,
+    handleDpmChange,
   };
 };

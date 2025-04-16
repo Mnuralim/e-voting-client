@@ -44,20 +44,24 @@ export const NavbarTutorial = ({
   };
 
   return (
-    <nav className="lg:w-96 top-[76px] lg:top-[120px] sticky lg:fixed lg:h-[calc(100vh-120px)] lg:overflow-hidden lg:border-r md:border-[#3D3D3D] z-10">
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#3D3D3D] lg:hidden">
-        <button onClick={handleOpenMenu}>
+    <nav className="lg:w-96 top-[95px] lg:top-[120px] sticky lg:fixed lg:h-[calc(100vh-120px)] lg:overflow-hidden lg:border-r-[3px] border-[#111111] z-10">
+      <div className="flex items-center justify-between px-4 py-3 bg-[#FF3A5E] border-b-[3px] border-[#111111] lg:hidden">
+        <button
+          onClick={handleOpenMenu}
+          className="bg-[#FFE962] p-1 border-[2px] border-[#111111] shadow-[2px_2px_0px_#111111]"
+        >
           <Image
             alt="hamburger-white"
             src={HamburgerWhiteIcon}
-            className="w-[30px] h-[30px]"
+            className="w-[24px] h-[24px]"
           />
         </button>
-        <p className="font-bold">
+        <p className="font-bold text-white">
           {activeParentIndex !== null
             ? tutorials[activeParentIndex].title
             : "Tutorial"}
         </p>
+        <div className="w-[30px]"></div> {/* Empty div for flex spacing */}
       </div>
       <Menu
         isMenuOpen={isMenuOpen}

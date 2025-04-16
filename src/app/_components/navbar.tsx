@@ -45,34 +45,47 @@ export const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-20">
-      <div className="flex items-center justify-between w-full max-w-7xl mx-auto py-5 bg-[#111111]">
+    <nav className="fixed top-0 left-0 w-full z-20 border-b-[3px] border-[#111111]">
+      <div className="flex items-center justify-between w-full max-w-7xl mx-auto py-5 bg-white">
         <div className="flex items-center gap-2 justify-between w-full px-4">
-          <Link href={"/"}>
-            <Image src={Logo} alt="logo" draggable={false} />
+          <Link
+            href={"/"}
+            className="bg-[#FFE962] p-2 border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111]"
+          >
+            <Image
+              src={Logo}
+              alt="logo"
+              draggable={false}
+              className="w-[120px]"
+            />
           </Link>
-          <button onClick={handleOpen} className="lg:hidden cursor-pointer">
+          <button
+            onClick={handleOpen}
+            className="lg:hidden cursor-pointer bg-[#FF6B6B] p-2 border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111]"
+          >
             <Image
               src={isOpen ? CloseIcon : HamburgerIcon}
               alt="hamburger-icon"
-              className="w-[30px] h-[30px] object-contain"
+              className="w-[24px] h-[24px] object-contain"
               draggable={false}
             />
           </button>
         </div>
         <div
-          className={`fixed lg:static w-full bg-[#111111] rounded-b-xl shadow-amber-300 lg:shadow-none lg:rounded-b-none shadow-[0_5px_5px_-5px_rgba(0,0,0,0.3)] z-10 duration-300 transform transition-all ease-linear ${
+          className={`fixed lg:static w-full bg-white border-b-[3px] border-[#111111] lg:border-b-0 z-10 duration-300 transform transition-all ease-linear ${
             isOpen ? "top-[76px]" : "-top-full"
           }`}
         >
-          <div className="items-center lg:gap-x-10 gap-y-2 px-4 py-4 lg:py-0 md:px-0 flex lg:flex-row flex-col">
+          <div className="items-center lg:gap-x-4 gap-y-4 px-6 py-6 lg:py-0 md:px-0 flex lg:flex-row flex-col">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href === "/vote" ? "/vote?election=0" : item.href}
                 onClick={() => setIsOpen(false)}
-                className={`font-bold bg-[#1C1C1C] hover:text-[#D1BF00]  w-full text-center rounded-md md:rounded-none py-2 lg:bg-transparent ${
-                  pathName === item.href ? "text-[#D1BF00]" : "text-[#E7E7E7] "
+                className={`font-bold hover:bg-[#FFE962] px-4 py-2 border-[3px] w-full text-center lg:w-auto ${
+                  pathName === item.href
+                    ? "bg-[#FFFF00] border-[#111111] shadow-[4px_4px_0px_#111111]"
+                    : "bg-white border-[#111111] hover:shadow-[4px_4px_0px_#111111] transition-all"
                 }`}
               >
                 {item.name}
@@ -82,16 +95,16 @@ export const Navbar = () => {
               <Link
                 onClick={() => setIsOpen(false)}
                 href={"/whitelist"}
-                className={`font-bold bg-[#1C1C1C] hover:text-[#D1BF00] w-full text-center rounded-md lg:rounded-none py-2 lg:bg-transparent ${
+                className={`font-bold px-4 py-2 border-[3px] w-full text-center lg:w-auto hover:bg-[#FFE962] ${
                   pathName === "/whitelist"
-                    ? "text-[#D1BF00]"
-                    : "text-[#E7E7E7]"
+                    ? "bg-[#FFFF00] border-[#111111] shadow-[4px_4px_0px_#111111]"
+                    : "bg-white border-[#111111] hover:shadow-[4px_4px_0px_#111111] transition-all"
                 }`}
               >
                 Whitelist
               </Link>
             )}
-            <div>
+            <div className="lg:ml-2">
               <WalletConnectButton />
             </div>
           </div>
