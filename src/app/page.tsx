@@ -24,7 +24,8 @@ export default function Home() {
           </svg>
         </div>
         <h1 className="font-bold text-3xl md:text-4xl xl:text-6xl transform rotate-[-1deg] text-[#111111]">
-          Pemilihan ORMAWA USN Kolaka 2025
+          Pemilihan <span className="text-[#FFE962]">ORMAWA</span> USN Kolaka
+          <span className="text-[#FFE962]"> 2025</span>
         </h1>
         <p className="font-medium text-sm md:text-base xl:text-lg bg-[#12E193] p-3 border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] rotate-[1deg]">
           Waktunya menentukan pemimpin yang akan membawa perubahan! Pilih
