@@ -1,11 +1,18 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 interface FeedbackProps {
   txHash: string;
 }
 
 export const Feedback = ({ txHash }: FeedbackProps) => {
+  const [showThankYou, setShowThankYou] = useState(false);
+  const googleFormUrl = "https://forms.gle/DPAou44Yf4ibr6vb9";
+
+  const handleFeedbackComplete = () => {
+    setShowThankYou(true);
+  };
+
   return (
     <div className="w-full max-w-md mx-auto my-8">
       <div className="bg-[#FFE962] border-[3px] border-[#111111] shadow-[4px_4px_0px_#111111] p-6 rotate-[-1deg]">
@@ -78,6 +85,31 @@ export const Feedback = ({ txHash }: FeedbackProps) => {
               </svg>
             </button>
           </div>
+        </div>
+
+        <div className="mt-4">
+          <div className="flex flex-col items-center">
+            <p className="text-[#111111] text-center mb-3">
+              Berikan umpan balik Anda untuk membantu kami meningkatkan layanan
+            </p>
+            <Link
+              href={`${googleFormUrl}?entry.123456=${txHash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleFeedbackComplete}
+              className="bg-[#FF3A5E] text-white py-2 px-4 border-[2px] border-[#111111] shadow-[3px_3px_0px_#111111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#111111] transition-all font-bold"
+            >
+              Berikan Feedback
+            </Link>
+          </div>
+
+          {showThankYou ? (
+            <div className="bg-[#12E193] p-3 border-[2px] border-[#111111] shadow-[2px_2px_0px_#111111] mt-2">
+              <p className="text-[#111111] text-center font-bold">
+                Terima kasih atas feedback Anda!
+              </p>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

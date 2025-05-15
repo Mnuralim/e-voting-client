@@ -88,13 +88,7 @@ export const ElectionList = ({
             transition: "all 0.2s ease",
           }}
         >
-          {election.electionType === 1
-            ? `BEM ${election.name}`
-            : election.electionType === 2
-            ? `HMPS ${election.name}`
-            : election.electionType === 5
-            ? `HMJ ${election.name}`
-            : election.name}
+          {election.name}
         </button>
       ))}
     </div>
